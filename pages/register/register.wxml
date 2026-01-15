@@ -1,0 +1,128 @@
+<!--用户注册页面-->
+<view class="register-container">
+  <view class="register-header">
+    <image class="header-bg" src="/images/register-bg.png" mode="aspectFill"></image>
+    <view class="header-content">
+      <text class="welcome-text">欢迎加入</text>
+      <text class="title-text">社会实践之旅</text>
+    </view>
+  </view>
+
+  <view class="register-form">
+    <view class="form-item">
+      <view class="label">
+        <text class="label-text">昵称</text>
+        <text class="required">*</text>
+      </view>
+      <input 
+        class="input" 
+        placeholder="请输入您的昵称" 
+        value="{{formData.nickname}}"
+        bindinput="onInputChange"
+        data-field="nickname"
+        maxlength="20"
+      />
+    </view>
+
+    <view class="form-item">
+      <view class="label">
+        <text class="label-text">年级</text>
+        <text class="required">*</text>
+      </view>
+      <picker 
+        mode="selector" 
+        range="{{gradeList}}" 
+        value="{{gradeIndex}}"
+        bindchange="onGradeChange">
+        <view class="picker {{gradeIndex === -1 ? 'placeholder' : ''}}">
+          {{gradeIndex === -1 ? '请选择年级' : gradeList[gradeIndex]}}
+          <text class="arrow">›</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <view class="label">
+        <text class="label-text">地区</text>
+        <text class="required">*</text>
+      </view>
+      <picker 
+        mode="region" 
+        value="{{formData.region}}"
+        bindchange="onRegionChange">
+        <view class="picker {{formData.region.length === 0 ? 'placeholder' : ''}}">
+          {{formData.region.length === 0 ? '请选择地区' : formData.region.join(' ')}}
+          <text class="arrow">›</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <view class="label">
+        <text class="label-text">学校</text>
+        <text class="required">*</text>
+      </view>
+      <input 
+        class="input" 
+        placeholder="请输入学校名称" 
+        value="{{formData.school}}"
+        bindinput="onInputChange"
+        data-field="school"
+      />
+    </view>
+
+    <view class="form-item">
+      <view class="label">
+        <text class="label-text">班级码</text>
+        <text class="required">*</text>
+        <text class="tip-icon" bindtap="showClassCodeTip">?</text>
+      </view>
+      <input 
+        class="input" 
+        placeholder="请输入班级码（由老师提供）" 
+        value="{{formData.classCode}}"
+        bindinput="onInputChange"
+        data-field="classCode"
+        maxlength="10"
+      />
+    </view>
+
+    <view class="form-item">
+      <view class="label">
+        <text class="label-text">手机号</text>
+        <text class="required">*</text>
+      </view>
+      <view class="phone-input">
+        <input 
+          class="input" 
+          type="number" 
+          placeholder="请输入手机号" 
+          value="{{formData.phone}}"
+          bindinput="onInputChange"
+          data-field="phone"
+          maxlength="11"
+        />
+        <button 
+          class="btn-wechat-auth" 
+          wx:if="{{!formData.phone}}"
+          open-type="getPhoneNumber"
+          bindgetphonenumber="getPhoneNumber">
+          微信授权
+        </button>
+      </view>
+    </view>
+
+    <view class="form-tip">
+      <text class="tip-icon">ℹ️</text>
+      <text class="tip-text">请确保信息准确，注册后部分信息不可修改</text>
+    </view>
+
+    <button 
+      class="btn-submit {{canSubmit ? 'btn-primary' : 'btn-disabled'}}" 
+      bindtap="submitRegister"
+      disabled="{{!canSubmit}}">
+      完成注册
+    </button>
+  </view>
+</view>
+

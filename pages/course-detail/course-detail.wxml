@@ -1,0 +1,144 @@
+<!--课程详情页面-->
+<view class="detail-container">
+  <!-- 课程封面 -->
+  <view class="course-header">
+    <image class="header-image" src="{{course.cover}}" mode="aspectFill"></image>
+    <view class="header-overlay">
+      <text class="course-title">{{course.title}}</text>
+      <text class="course-subtitle">{{course.subtitle}}</text>
+    </view>
+  </view>
+
+  <!-- 课程详情 -->
+  <view class="course-content">
+    <!-- 价格与名额 -->
+    <view class="price-section card">
+      <view class="price-info">
+        <view class="price-main">
+          <text class="price-symbol">¥</text>
+          <text class="price-value">{{course.price}}</text>
+          <text class="price-original" wx:if="{{course.originalPrice}}">¥{{course.originalPrice}}</text>
+        </view>
+        <view class="quota-info">
+          <text class="quota-number">{{course.quota - course.enrolled}}</text>
+          <text class="quota-text">个名额剩余</text>
+        </view>
+      </view>
+      <view class="progress-bar">
+        <view class="progress-fill" style="width: {{(course.enrolled / course.quota) * 100}}%;"></view>
+      </view>
+      <text class="progress-text">已有{{course.enrolled}}人报名</text>
+    </view>
+
+    <!-- 课程亮点 -->
+    <view class="highlights-section card">
+      <view class="section-title">
+        <text class="title-icon">✨</text>
+        <text>课程亮点</text>
+      </view>
+      <view class="highlights-list">
+        <view class="highlight-item" wx:for="{{course.highlights}}" wx:key="index">
+          <text class="item-dot"></text>
+          <text class="item-text">{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 课程介绍 -->
+    <view class="intro-section card">
+      <view class="section-title">
+        <text class="title-icon">📝</text>
+        <text>课程介绍</text>
+      </view>
+      <text class="intro-text">{{course.description}}</text>
+    </view>
+
+    <!-- 课程安排 -->
+    <view class="schedule-section card" wx:if="{{course.schedule}}">
+      <view class="section-title">
+        <text class="title-icon">📅</text>
+        <text>课程安排</text>
+      </view>
+      <view class="schedule-list">
+        <view class="schedule-item" wx:for="{{course.schedule}}" wx:key="day">
+          <view class="schedule-day">第{{item.day}}天</view>
+          <view class="schedule-content">
+            <text class="schedule-title">{{item.title}}</text>
+            <text class="schedule-detail">{{item.content}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 课程信息 -->
+    <view class="info-section card">
+      <view class="section-title">
+        <text class="title-icon">ℹ️</text>
+        <text>课程信息</text>
+      </view>
+      <view class="info-list">
+        <view class="info-item">
+          <text class="info-label">适合年龄</text>
+          <text class="info-value">{{course.suitable}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">活动地点</text>
+          <text class="info-value">{{course.location}}</text>
+        </view>
+        <view class="info-item">
+          <text class="info-label">活动时长</text>
+          <text class="info-value">{{course.duration}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 费用包含 -->
+    <view class="includes-section card" wx:if="{{course.includes}}">
+      <view class="section-title">
+        <text class="title-icon">💰</text>
+        <text>费用包含</text>
+      </view>
+      <view class="includes-list">
+        <view class="include-item" wx:for="{{course.includes}}" wx:key="index">
+          <text class="include-dot">✓</text>
+          <text class="include-text">{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 图片展示 -->
+    <view class="images-section card" wx:if="{{course.images}}">
+      <view class="section-title">
+        <text class="title-icon">📷</text>
+        <text>精彩瞬间</text>
+      </view>
+      <view class="images-grid">
+        <image 
+          class="grid-image" 
+          wx:for="{{course.images}}" 
+          wx:key="index"
+          src="{{item}}" 
+          mode="aspectFill"
+          bindtap="previewImage"
+          data-urls="{{course.images}}"
+          data-index="{{index}}">
+        </image>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar">
+    <view class="bar-left">
+      <text class="bar-price">¥{{course.price}}</text>
+      <text class="bar-tip">起</text>
+    </view>
+    <button 
+      class="btn-enroll {{course.enrolled >= course.quota ? 'btn-disabled' : 'btn-primary'}}" 
+      bindtap="enrollCourse"
+      disabled="{{course.enrolled >= course.quota}}">
+      {{course.enrolled >= course.quota ? '名额已满' : '立即报名'}}
+    </button>
+  </view>
+</view>
+

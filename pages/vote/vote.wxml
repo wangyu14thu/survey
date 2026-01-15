@@ -1,0 +1,42 @@
+<!--投票页面-->
+<view class="vote-container">
+  <view class="vote-header">
+    <text class="header-title">选择您最期待的实践主题</text>
+    <text class="header-subtitle">每人限投1票，投票后不可更改</text>
+  </view>
+
+  <view class="vote-list">
+    <view class="vote-item {{selectedId === item.id ? 'selected' : ''}}" 
+          wx:for="{{themes}}" 
+          wx:key="id"
+          bindtap="selectTheme"
+          data-id="{{item.id}}">
+      <view class="item-left">
+        <text class="item-icon">{{item.icon}}</text>
+        <view class="item-info">
+          <text class="item-name">{{item.name}}</text>
+          <text class="item-location">{{item.location}}</text>
+        </view>
+      </view>
+      <view class="item-right">
+        <view class="radio {{selectedId === item.id ? 'radio-checked' : ''}}">
+          <text class="radio-dot" wx:if="{{selectedId === item.id}}"></text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="vote-info">
+    <text class="info-icon">ℹ️</text>
+    <text class="info-text">点击主题名称可查看详细信息</text>
+  </view>
+
+  <view class="bottom-bar">
+    <button class="btn-submit {{selectedId ? 'btn-primary' : 'btn-disabled'}}" 
+            bindtap="submitVote"
+            disabled="{{!selectedId || submitting}}">
+      {{submitting ? '提交中...' : '确认投票'}}
+    </button>
+  </view>
+</view>
+

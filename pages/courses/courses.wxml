@@ -1,0 +1,70 @@
+<!--精品课程页面-->
+<view class="courses-container">
+  <view class="courses-header">
+    <text class="header-title">精品项目课</text>
+    <text class="header-subtitle">更多职业体验等你来探索</text>
+  </view>
+
+  <!-- 课程列表 -->
+  <view class="courses-list">
+    <view class="course-card" wx:for="{{courses}}" wx:key="id" bindtap="navigateToDetail" data-id="{{item.id}}">
+      <!-- 课程封面 -->
+      <view class="course-cover">
+        <image class="cover-image" src="{{item.cover}}" mode="aspectFill"></image>
+        <view class="course-tag">{{item.tag}}</view>
+        <view class="course-price-badge">
+          <text class="price">¥{{item.price}}</text>
+          <text class="original-price" wx:if="{{item.originalPrice}}">¥{{item.originalPrice}}</text>
+        </view>
+      </view>
+
+      <!-- 课程信息 -->
+      <view class="course-info">
+        <view class="course-title">{{item.title}}</view>
+        <view class="course-subtitle">{{item.subtitle}}</view>
+        
+        <view class="course-highlights">
+          <view class="highlight-item" wx:for="{{item.highlights}}" wx:for-item="highlight" wx:key="index">
+            <text class="highlight-dot">✓</text>
+            <text class="highlight-text">{{highlight}}</text>
+          </view>
+        </view>
+
+        <view class="course-meta">
+          <view class="meta-item">
+            <text class="meta-icon">📍</text>
+            <text class="meta-text">{{item.location}}</text>
+          </view>
+          <view class="meta-item">
+            <text class="meta-icon">⏰</text>
+            <text class="meta-text">{{item.duration}}</text>
+          </view>
+          <view class="meta-item">
+            <text class="meta-icon">👥</text>
+            <text class="meta-text">剩余{{item.quota - item.enrolled}}个名额</text>
+          </view>
+        </view>
+
+        <!-- 报名进度 -->
+        <view class="enrollment-progress">
+          <view class="progress-bar">
+            <view class="progress-fill" style="width: {{(item.enrolled / item.quota) * 100}}%;"></view>
+          </view>
+          <text class="progress-text">{{item.enrolled}}/{{item.quota}}人已报名</text>
+        </view>
+
+        <button class="btn-enroll {{item.enrolled >= item.quota ? 'btn-disabled' : 'btn-primary'}}">
+          {{item.enrolled >= item.quota ? '名额已满' : '立即报名'}}
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{courses.length === 0}}">
+    <image class="empty-image" src="/images/empty-course.png" mode="aspectFit"></image>
+    <text class="empty-text">暂无课程</text>
+    <text class="empty-tip">敬请期待更多精彩课程</text>
+  </view>
+</view>
+

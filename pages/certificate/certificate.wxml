@@ -1,0 +1,87 @@
+<!--电子证书页面-->
+<view class="certificate-container">
+  <view class="page-header">
+    <text class="header-title">我的证书</text>
+    <text class="header-subtitle">记录每一份荣誉</text>
+  </view>
+
+  <!-- 证书列表 -->
+  <view class="certificates-list" wx:if="{{certificates.length > 0}}">
+    <view class="certificate-card" wx:for="{{certificates}}" wx:key="id" bindtap="viewCertificate" data-cert="{{item}}">
+      <view class="cert-header">
+        <image class="cert-bg" src="/images/cert-bg.png" mode="aspectFill"></image>
+        <view class="cert-badge">
+          <text class="badge-icon">🏆</text>
+        </view>
+      </view>
+      <view class="cert-content">
+        <view class="cert-title">{{item.themeName}}</view>
+        <view class="cert-role">{{item.role}}</view>
+        <view class="cert-info">
+          <text class="info-name">{{item.userName}}</text>
+          <text class="info-date">{{item.date}}</text>
+        </view>
+      </view>
+      <view class="cert-actions">
+        <button class="action-btn" catchtap="downloadCert" data-cert="{{item}}">
+          <text class="btn-icon">📥</text>
+          <text>下载</text>
+        </button>
+        <button class="action-btn" catchtap="shareCert" data-cert="{{item}}">
+          <text class="btn-icon">📤</text>
+          <text>分享</text>
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{certificates.length === 0}}">
+    <image class="empty-image" src="/images/empty-certificate.png" mode="aspectFit"></image>
+    <text class="empty-text">还没有获得证书</text>
+    <text class="empty-tip">完成实践活动后即可获得证书</text>
+  </view>
+
+  <!-- 查看更多活动 -->
+  <view class="more-activities" wx:if="{{certificates.length > 0}}">
+    <text class="more-title">想要更多职业体验？</text>
+    <button class="btn-courses" bindtap="navigateToCourses">
+      探索精品项目课
+      <text class="btn-badge">New</text>
+    </button>
+  </view>
+</view>
+
+<!-- 证书详情弹窗 -->
+<view class="cert-modal" wx:if="{{showModal}}" bindtap="closeModal">
+  <view class="modal-content" catchtap="stopPropagation">
+    <view class="cert-detail">
+      <image class="cert-detail-bg" src="/images/cert-detail-bg.png" mode="aspectFit"></image>
+      <view class="cert-detail-content">
+        <text class="detail-title">实践证书</text>
+        <text class="detail-subtitle">Certificate of Practice</text>
+        
+        <view class="detail-body">
+          <text class="detail-text">恭喜</text>
+          <text class="detail-name">{{currentCert.userName}}</text>
+          <text class="detail-text">完成</text>
+          <text class="detail-theme">《{{currentCert.themeName}}》</text>
+          <text class="detail-text">主题实践挑战</text>
+          <text class="detail-text">成为一名合格的</text>
+          <text class="detail-role">{{currentCert.role}}</text>
+        </view>
+
+        <view class="detail-footer">
+          <text class="detail-date">颁发日期：{{currentCert.date}}</text>
+          <text class="detail-org">社会实践活动组委会</text>
+        </view>
+      </view>
+    </view>
+    
+    <view class="modal-actions">
+      <button class="modal-btn" bindtap="downloadCertDetail">保存到相册</button>
+      <button class="modal-btn secondary" bindtap="closeModal">关闭</button>
+    </view>
+  </view>
+</view>
+

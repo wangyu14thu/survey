@@ -1,0 +1,56 @@
+<!--订单列表页面-->
+<view class="order-container">
+  <view class="order-header">
+    <text class="header-title">我的订单</text>
+  </view>
+
+  <!-- 订单列表 -->
+  <view class="orders-list" wx:if="{{orders.length > 0}}">
+    <view class="order-card" wx:for="{{orders}}" wx:key="id" bindtap="viewOrderDetail" data-order="{{item}}">
+      <view class="order-status {{item.status}}">
+        <text class="status-text">{{item.statusText}}</text>
+      </view>
+      
+      <view class="order-content">
+        <image class="order-image" src="{{item.courseImage}}" mode="aspectFill"></image>
+        <view class="order-info">
+          <text class="order-title">{{item.courseTitle}}</text>
+          <text class="order-time">下单时间：{{item.createTime}}</text>
+          <text class="order-price">¥{{item.price}}</text>
+        </view>
+      </view>
+
+      <view class="order-actions">
+        <!-- 待支付 -->
+        <block wx:if="{{item.status === 'pending'}}">
+          <button class="action-btn secondary" catchtap="cancelOrder" data-id="{{item.id}}">取消订单</button>
+          <button class="action-btn primary" catchtap="payOrder" data-order="{{item}}">立即支付</button>
+        </block>
+        
+        <!-- 待开始 -->
+        <block wx:if="{{item.status === 'paid'}}">
+          <button class="action-btn primary" catchtap="viewQRCode" data-order="{{item}}">查看凭证</button>
+        </block>
+        
+        <!-- 进行中 -->
+        <block wx:if="{{item.status === 'ongoing'}}">
+          <button class="action-btn primary" catchtap="viewAlbum" data-order="{{item}}">查看相册</button>
+        </block>
+        
+        <!-- 已完成 -->
+        <block wx:if="{{item.status === 'completed'}}">
+          <button class="action-btn secondary" catchtap="viewCertificate" data-order="{{item}}">查看证书</button>
+          <button class="action-btn primary" catchtap="shareOrder" data-order="{{item}}">分享</button>
+        </block>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{orders.length === 0}}">
+    <image class="empty-image" src="/images/empty-order.png" mode="aspectFit"></image>
+    <text class="empty-text">还没有订单</text>
+    <button class="btn-explore" bindtap="navigateToCourses">去看看课程</button>
+  </view>
+</view>
+

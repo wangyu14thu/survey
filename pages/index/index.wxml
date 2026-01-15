@@ -1,0 +1,78 @@
+<!--首页-->
+<view class="index-container">
+  <!-- Banner轮播图 -->
+  <swiper class="banner-swiper" indicator-dots indicator-color="rgba(255,255,255,0.5)" indicator-active-color="#ffffff" autoplay circular>
+    <swiper-item wx:for="{{banners}}" wx:key="id">
+      <image class="banner-image" src="{{item.image}}" mode="aspectFill" bindtap="onBannerTap" data-url="{{item.url}}"></image>
+    </swiper-item>
+  </swiper>
+
+  <!-- 投票状态提示 -->
+  <view class="vote-status-card" wx:if="{{voteStatus}}">
+    <view class="status-header">
+      <text class="status-icon">{{voteStatus.icon}}</text>
+      <text class="status-title">{{voteStatus.title}}</text>
+    </view>
+    <view class="status-content">
+      <text class="status-text">{{voteStatus.content}}</text>
+      <view class="countdown" wx:if="{{voteStatus.showCountdown}}">
+        <text class="countdown-text">{{countdownText}}</text>
+      </view>
+    </view>
+    <button class="status-btn" bindtap="navigateToVote" wx:if="{{voteStatus.showButton}}">
+      {{voteStatus.buttonText}}
+    </button>
+  </view>
+
+  <!-- 投票主题卡片 -->
+  <view class="section-header">
+    <text class="section-title">实践主题投票</text>
+    <text class="section-subtitle">民主选择，你说了算</text>
+  </view>
+
+  <view class="themes-container">
+    <view class="theme-card" wx:for="{{themes}}" wx:key="id" bindtap="navigateToDetail" data-id="{{item.id}}">
+      <view class="theme-cover">
+        <image class="cover-image" src="{{item.cover}}" mode="aspectFill"></image>
+        <view class="theme-overlay">
+          <text class="theme-icon">{{item.icon}}</text>
+        </view>
+      </view>
+      <view class="theme-info">
+        <view class="theme-name">{{item.name}}</view>
+        <view class="theme-location">
+          <text class="location-icon">📍</text>
+          <text class="location-text">{{item.location}}</text>
+        </view>
+        <view class="theme-desc">{{item.description}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 参与统计 -->
+  <view class="stats-card" wx:if="{{totalVotes > 0}}">
+    <text class="stats-icon">👥</text>
+    <text class="stats-text">已有 <text class="stats-number">{{totalVotes}}</text> 人参与投票</text>
+  </view>
+
+  <!-- 快捷入口 -->
+  <view class="quick-entry">
+    <view class="entry-item" bindtap="navigateToAlbum">
+      <view class="entry-icon">📷</view>
+      <text class="entry-text">云端相册</text>
+    </view>
+    <view class="entry-item" bindtap="navigateToCertificate">
+      <view class="entry-icon">🏆</view>
+      <text class="entry-text">我的证书</text>
+    </view>
+    <view class="entry-item" bindtap="navigateToCourses">
+      <view class="entry-icon badge">📚</view>
+      <text class="entry-text">精品课程</text>
+    </view>
+    <view class="entry-item" bindtap="navigateToOrder">
+      <view class="entry-icon">📝</view>
+      <text class="entry-text">我的订单</text>
+    </view>
+  </view>
+</view>
+
