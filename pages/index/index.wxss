@@ -100,25 +100,28 @@
 
 /* 主题卡片 */
 .themes-container {
-  padding: 0 30rpx;
+  padding: 0 20rpx;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
 }
 
 .theme-card {
+  width: calc(50% - 10rpx);
   background-color: white;
   border-radius: 20rpx;
-  margin-bottom: 30rpx;
   overflow: hidden;
   box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
   transition: all 0.3s;
 }
 
 .theme-card:active {
-  transform: scale(0.98);
+  transform: scale(0.95);
 }
 
 .theme-cover {
   position: relative;
-  height: 360rpx;
+  height: 280rpx;
   overflow: hidden;
 }
 
@@ -133,48 +136,47 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.6));
+  background: linear-gradient(to bottom, transparent 40%, rgba(0, 0, 0, 0.6));
   display: flex;
   align-items: flex-end;
-  padding: 30rpx;
+  padding: 24rpx;
 }
 
 .theme-icon {
-  font-size: 80rpx;
+  font-size: 70rpx;
 }
 
 .theme-info {
-  padding: 30rpx;
+  padding: 24rpx;
 }
 
 .theme-name {
-  font-size: 36rpx;
+  font-size: 30rpx;
   font-weight: bold;
   color: #333;
-  margin-bottom: 16rpx;
+  margin-bottom: 12rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .theme-location {
   display: flex;
   align-items: center;
-  margin-bottom: 20rpx;
 }
 
 .location-icon {
-  font-size: 28rpx;
-  margin-right: 8rpx;
+  font-size: 24rpx;
+  margin-right: 6rpx;
 }
 
 .location-text {
-  font-size: 26rpx;
+  font-size: 24rpx;
   color: #666;
   flex: 1;
-}
-
-.theme-desc {
-  font-size: 28rpx;
-  color: #999;
-  line-height: 1.6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* 统计卡片 */

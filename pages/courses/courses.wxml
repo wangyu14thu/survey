@@ -12,24 +12,12 @@
       <view class="course-cover">
         <image class="cover-image" src="{{item.cover}}" mode="aspectFill"></image>
         <view class="course-tag">{{item.tag}}</view>
-        <view class="course-price-badge">
-          <text class="price">¥{{item.price}}</text>
-          <text class="original-price" wx:if="{{item.originalPrice}}">¥{{item.originalPrice}}</text>
-        </view>
       </view>
 
       <!-- 课程信息 -->
       <view class="course-info">
         <view class="course-title">{{item.title}}</view>
-        <view class="course-subtitle">{{item.subtitle}}</view>
         
-        <view class="course-highlights">
-          <view class="highlight-item" wx:for="{{item.highlights}}" wx:for-item="highlight" wx:key="index">
-            <text class="highlight-dot">✓</text>
-            <text class="highlight-text">{{highlight}}</text>
-          </view>
-        </view>
-
         <view class="course-meta">
           <view class="meta-item">
             <text class="meta-icon">📍</text>
@@ -39,23 +27,13 @@
             <text class="meta-icon">⏰</text>
             <text class="meta-text">{{item.duration}}</text>
           </view>
-          <view class="meta-item">
-            <text class="meta-icon">👥</text>
-            <text class="meta-text">剩余{{item.quota - item.enrolled}}个名额</text>
-          </view>
         </view>
 
-        <!-- 报名进度 -->
-        <view class="enrollment-progress">
-          <view class="progress-bar">
-            <view class="progress-fill" style="width: {{(item.enrolled / item.quota) * 100}}%;"></view>
-          </view>
-          <text class="progress-text">{{item.enrolled}}/{{item.quota}}人已报名</text>
+        <!-- 报名信息 -->
+        <view class="enrollment-info">
+          <view class="price-tag">¥{{item.price}}</view>
+          <view class="quota-tag">剩余{{item.quota - item.enrolled}}名额</view>
         </view>
-
-        <button class="btn-enroll {{item.enrolled >= item.quota ? 'btn-disabled' : 'btn-primary'}}">
-          {{item.enrolled >= item.quota ? '名额已满' : '立即报名'}}
-        </button>
       </view>
     </view>
   </view>

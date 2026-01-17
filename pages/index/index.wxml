@@ -44,7 +44,6 @@
           <text class="location-icon">📍</text>
           <text class="location-text">{{item.location}}</text>
         </view>
-        <view class="theme-desc">{{item.description}}</view>
       </view>
     </view>
   </view>
