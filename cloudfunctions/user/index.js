@@ -35,22 +35,7 @@ exports.main = async (event, context) => {
 
 // 用户注册
 async function register(event) {
-  const { openid, nickname, grade, region, school, classCode, phone, registerTime } = event
-
-  // 验证班级码
-  const classResult = await db.collection('classes')
-    .where({ classCode })
-    .limit(1)
-    .get()
-
-  if (classResult.data.length === 0) {
-    return {
-      success: false,
-      message: '班级码无效，请联系老师获取正确的班级码'
-    }
-  }
-
-  const classInfo = classResult.data[0]
+  const { openid, nickname, grade, region, phone, registerTime } = event
 
   // 检查是否已注册
   const userResult = await db.collection('users')
@@ -72,10 +57,6 @@ async function register(event) {
       nickname,
       grade,
       region: region.join(' '),
-      school,
-      classCode,
-      classId: classInfo._id,
-      className: classInfo.name,
       phone,
       registerTime,
       createTime: db.serverDate()
@@ -84,9 +65,7 @@ async function register(event) {
 
   return {
     success: true,
-    message: '注册成功',
-    classId: classInfo._id,
-    className: classInfo.name
+    message: '注册成功'
   }
 }
 

@@ -7,8 +7,9 @@ App({
     } else {
       wx.cloud.init({
         traceUser: true,
-        env: 'your-env-id' // 替换为你的云开发环境ID
+        env: 'cloud1-9gpi4pkt9a8bce92' // 云开发环境ID
       });
+      console.log('云开发初始化完成');
     }
 
     // 检查用户登录状态

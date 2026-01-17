@@ -40,7 +40,7 @@
   },
   "compileType": "miniprogram",
   "libVersion": "2.19.4",
-  "appid": "your-appid",
+  "appid": "wx2d26ef0658587b77",
   "projectname": "social-practice-survey",
   "cloudfunctionRoot": "cloudfunctions/",
   "condition": {}

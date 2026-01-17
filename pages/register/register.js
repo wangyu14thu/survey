@@ -7,8 +7,6 @@ Page({
       nickname: '',
       grade: '',
       region: [],
-      school: '',
-      classCode: '',
       phone: ''
     },
     gradeList: [
@@ -98,24 +96,12 @@ Page({
     }
   },
 
-  // 显示班级码提示
-  showClassCodeTip() {
-    wx.showModal({
-      title: '班级码说明',
-      content: '班级码是由老师创建的唯一标识，用于确保您能看到所属班级的活动照片。请向您的老师获取班级码。',
-      showCancel: false,
-      confirmText: '我知道了'
-    })
-  },
-
   // 检查是否可以提交
   checkCanSubmit() {
-    const { nickname, grade, region, school, classCode, phone } = this.data.formData
+    const { nickname, grade, region, phone } = this.data.formData
     const canSubmit = nickname.trim() !== '' &&
                      grade !== '' &&
                      region.length > 0 &&
-                     school.trim() !== '' &&
-                     classCode.trim() !== '' &&
                      phone.length === 11
 
     this.setData({ canSubmit })
@@ -150,7 +136,7 @@ Page({
         throw new Error('获取用户标识失败')
       }
 
-      // 验证班级码并注册
+      // 注册用户
       const res = await wx.cloud.callFunction({
         name: 'user',
         data: {
@@ -165,9 +151,7 @@ Page({
         // 保存用户信息到本地
         const userInfo = {
           ...this.data.formData,
-          openid,
-          classId: res.result.classId,
-          className: res.result.className
+          openid
         }
         
         wx.setStorageSync('userInfo', userInfo)
@@ -189,12 +173,7 @@ Page({
     } catch (err) {
       util.hideLoading()
       console.error('注册失败', err)
-      
-      if (err.message.includes('班级码')) {
-        util.showToast('班级码无效，请联系老师')
-      } else {
-        util.showToast('注册失败，请重试')
-      }
+      util.showToast('注册失败，请重试')
     }
   }
 })

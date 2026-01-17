@@ -59,36 +59,6 @@
 
     <view class="form-item">
       <view class="label">
-        <text class="label-text">学校</text>
-        <text class="required">*</text>
-      </view>
-      <input 
-        class="input" 
-        placeholder="请输入学校名称" 
-        value="{{formData.school}}"
-        bindinput="onInputChange"
-        data-field="school"
-      />
-    </view>
-
-    <view class="form-item">
-      <view class="label">
-        <text class="label-text">班级码</text>
-        <text class="required">*</text>
-        <text class="tip-icon" bindtap="showClassCodeTip">?</text>
-      </view>
-      <input 
-        class="input" 
-        placeholder="请输入班级码（由老师提供）" 
-        value="{{formData.classCode}}"
-        bindinput="onInputChange"
-        data-field="classCode"
-        maxlength="10"
-      />
-    </view>
-
-    <view class="form-item">
-      <view class="label">
         <text class="label-text">手机号</text>
         <text class="required">*</text>
       </view>
