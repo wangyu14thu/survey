@@ -15,6 +15,9 @@ exports.main = async (event, context) => {
       case 'register':
         return await register(event)
       
+      case 'getUserInfo':
+        return await getUserInfo(event)
+      
       case 'getStats':
         return await getStats(event)
 
@@ -44,13 +47,34 @@ async function register(event) {
     .get()
 
   if (userResult.data.length > 0) {
-    return {
-      success: false,
-      message: '您已经注册过了'
+    // 用户已注册，需要验证姓名和手机号是否匹配
+    const existingUser = userResult.data[0]
+    
+    // 验证姓名和手机号是否完全匹配
+    if (existingUser.nickname === nickname && existingUser.phone === phone) {
+      // 身份验证通过，欢迎回来
+      return {
+        success: true,
+        message: '欢迎回来',
+        userInfo: {
+          openid: existingUser.openid,
+          nickname: existingUser.nickname,
+          grade: existingUser.grade,
+          region: existingUser.region,
+          phone: existingUser.phone
+        }
+      }
+    } else {
+      // 身份验证失败，姓名或手机号不匹配
+      return {
+        success: false,
+        message: '该微信账号已注册，但姓名或手机号不匹配，请核对信息后重试',
+        code: 'INFO_MISMATCH'
+      }
     }
   }
 
-  // 创建用户记录
+  // 创建新用户记录
   await db.collection('users').add({
     data: {
       openid,
@@ -65,7 +89,43 @@ async function register(event) {
 
   return {
     success: true,
-    message: '注册成功'
+    message: '注册成功',
+    userInfo: {
+      openid,
+      nickname,
+      grade,
+      region: region.join(' '),
+      phone
+    }
+  }
+}
+
+// 获取用户信息
+async function getUserInfo(event) {
+  const { openid } = event
+
+  const userResult = await db.collection('users')
+    .where({ openid })
+    .limit(1)
+    .get()
+
+  if (userResult.data.length > 0) {
+    const user = userResult.data[0]
+    return {
+      success: true,
+      userInfo: {
+        openid: user.openid,
+        nickname: user.nickname,
+        grade: user.grade,
+        region: user.region,
+        phone: user.phone
+      }
+    }
+  }
+
+  return {
+    success: false,
+    message: '用户不存在'
   }
 }
 
