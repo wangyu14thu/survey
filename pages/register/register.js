@@ -27,7 +27,7 @@ Page({
       return
     }
 
-    // 检查是否已注册
+    // 检查是否已注册（只检查本地存储）
     const userInfo = util.checkRegistration()
     if (userInfo) {
       wx.switchTab({
@@ -148,17 +148,24 @@ Page({
       })
 
       if (res.result.success) {
-        // 保存用户信息到本地
-        const userInfo = {
+        // 保存用户信息到本地（使用云函数返回的数据或本地数据）
+        const userInfo = res.result.userInfo || {
           ...this.data.formData,
-          openid
+          openid,
+          region: this.data.formData.region.join(' ')
         }
         
         wx.setStorageSync('userInfo', userInfo)
         app.globalData.userInfo = userInfo
 
         util.hideLoading()
-        util.showToast('注册成功', 'success')
+        
+        // 根据返回消息显示不同提示
+        if (res.result.message === '欢迎回来') {
+          util.showToast('欢迎回来', 'success')
+        } else {
+          util.showToast('注册成功', 'success')
+        }
 
         // 延迟跳转到首页
         setTimeout(() => {
@@ -173,7 +180,18 @@ Page({
     } catch (err) {
       util.hideLoading()
       console.error('注册失败', err)
-      util.showToast('注册失败，请重试')
+      
+      // 判断具体的错误类型
+      if (err.message.includes('姓名或手机号不匹配')) {
+        wx.showModal({
+          title: '身份验证失败',
+          content: '该微信账号已注册过，但您填写的姓名或手机号与注册信息不匹配。\n\n如果忘记注册信息，请联系管理员。',
+          showCancel: false,
+          confirmText: '我知道了'
+        })
+      } else {
+        util.showToast('注册失败，请重试')
+      }
     }
   }
 })
