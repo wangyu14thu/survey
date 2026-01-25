@@ -7,7 +7,7 @@ Page({
     stats: {
       certificates: 0,
       orders: 0,
-      albums: 0
+      records: 0
     }
   },
 
@@ -70,9 +70,9 @@ Page({
   },
 
   // 跳转到相册页面
-  navigateToAlbum() {
-    wx.switchTab({
-      url: '/pages/album/album'
+  navigateToRecords() {
+    wx.navigateTo({
+      url: '/pages/records/records'
     })
   },
 

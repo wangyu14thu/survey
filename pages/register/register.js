@@ -8,6 +8,7 @@ Page({
       nickname: '',
       grade: '',
       region: [],
+      school: '', // 学校
       phone: ''
     },
     gradeList: [
@@ -15,7 +16,12 @@ Page({
       '初一', '初二', '初三',
       '高一', '高二', '高三'
     ],
+    schoolList: [
+      '北京翠微小学',
+      '其他'
+    ],
     gradeIndex: -1,
+    schoolIndex: -1,
     canSubmit: false
   },
 
@@ -78,6 +84,17 @@ Page({
     })
   },
 
+  // 学校选择
+  onSchoolChange(e) {
+    const index = e.detail.value
+    this.setData({
+      schoolIndex: index,
+      'formData.school': this.data.schoolList[index]
+    }, () => {
+      this.checkCanSubmit()
+    })
+  },
+
   // 微信授权获取手机号
   getPhoneNumber(e) {
     if (e.detail.errMsg === 'getPhoneNumber:ok') {
@@ -109,11 +126,12 @@ Page({
 
   // 检查是否可以提交
   checkCanSubmit() {
-    const { role, nickname, grade, region, phone } = this.data.formData
+    const { role, nickname, grade, region, school, phone } = this.data.formData
     const canSubmit = role !== '' &&
                      nickname.trim() !== '' &&
                      grade !== '' &&
                      region.length > 0 &&
+                     school !== '' &&
                      phone.length === 11
 
     this.setData({ canSubmit })

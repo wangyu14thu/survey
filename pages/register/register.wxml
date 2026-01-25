@@ -80,6 +80,23 @@
 
     <view class="form-item">
       <view class="label">
+        <text class="label-text">学校</text>
+        <text class="required">*</text>
+      </view>
+      <picker 
+        mode="selector" 
+        range="{{schoolList}}" 
+        value="{{schoolIndex}}"
+        bindchange="onSchoolChange">
+        <view class="picker {{schoolIndex === -1 ? 'placeholder' : ''}}">
+          {{schoolIndex === -1 ? '请选择学校' : schoolList[schoolIndex]}}
+          <text class="arrow">›</text>
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <view class="label">
         <text class="label-text">手机号</text>
         <text class="required">*</text>
       </view>

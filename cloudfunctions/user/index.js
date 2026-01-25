@@ -38,7 +38,7 @@ exports.main = async (event, context) => {
 
 // 用户注册
 async function register(event) {
-  const { openid, role, nickname, grade, region, phone, registerTime } = event
+  const { openid, role, nickname, grade, region, school, phone, registerTime } = event
 
   // 检查是否已注册
   const userResult = await db.collection('users')
@@ -62,6 +62,7 @@ async function register(event) {
           nickname: existingUser.nickname,
           grade: existingUser.grade,
           region: existingUser.region,
+          school: existingUser.school,
           phone: existingUser.phone
         }
       }
@@ -79,10 +80,11 @@ async function register(event) {
   await db.collection('users').add({
     data: {
       openid,
-      role, // 添加身份字段
+      role, // 身份
       nickname,
       grade,
       region: region.join(' '),
+      school, // 学校
       phone,
       registerTime,
       createTime: db.serverDate()
@@ -98,6 +100,7 @@ async function register(event) {
       nickname,
       grade,
       region: region.join(' '),
+      school,
       phone
     }
   }
@@ -122,6 +125,7 @@ async function getUserInfo(event) {
         nickname: user.nickname,
         grade: user.grade,
         region: user.region,
+        school: user.school,
         phone: user.phone
       }
     }
@@ -147,8 +151,8 @@ async function getStats(event) {
     .where({ openid })
     .count()
 
-  // 获取相册数量
-  const albumResult = await db.collection('albums')
+  // 获取成长记录数量
+  const recordResult = await db.collection('records')
     .where({ openid })
     .count()
 
@@ -157,7 +161,7 @@ async function getStats(event) {
     stats: {
       certificates: certResult.total,
       orders: orderResult.total,
-      albums: albumResult.total
+      records: recordResult.total
     }
   }
 }

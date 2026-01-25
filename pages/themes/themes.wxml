@@ -1,10 +1,5 @@
 <!--社会实践主题列表页面-->
 <view class="themes-container">
-  <view class="themes-header">
-    <text class="header-title">六大实践主题</text>
-    <text class="header-subtitle">选择您感兴趣的主题，查看详细信息</text>
-  </view>
-
   <view class="themes-list">
     <view class="theme-card" 
           wx:for="{{themes}}" 

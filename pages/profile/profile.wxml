@@ -26,9 +26,9 @@
       <text class="stat-number">{{stats.orders}}</text>
       <text class="stat-label">订单</text>
     </view>
-    <view class="stat-item" bindtap="navigateToAlbum">
-      <text class="stat-number">{{stats.albums}}</text>
-      <text class="stat-label">相册</text>
+    <view class="stat-item" bindtap="navigateToRecords">
+      <text class="stat-number">{{stats.records}}</text>
+      <text class="stat-label">记录</text>
     </view>
   </view>
 
@@ -51,10 +51,10 @@
         <text class="menu-arrow">›</text>
       </view>
 
-      <view class="menu-item" bindtap="navigateToAlbum">
+      <view class="menu-item" bindtap="navigateToRecords">
         <view class="menu-left">
-          <text class="menu-icon">📷</text>
-          <text class="menu-title">云端相册</text>
+          <text class="menu-icon">📝</text>
+          <text class="menu-title">成长记录</text>
         </view>
         <text class="menu-arrow">›</text>
       </view>

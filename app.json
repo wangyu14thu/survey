@@ -5,16 +5,15 @@
     "pages/register/register",
     "pages/message/message",
     "pages/themes/themes",
+    "pages/records/records",
     "pages/vote/vote",
     "pages/vote-detail/vote-detail",
     "pages/result/result",
-    "pages/album/album",
     "pages/certificate/certificate",
     "pages/courses/courses",
     "pages/course-detail/course-detail",
     "pages/order/order",
     "pages/profile/profile",
-    "pages/teacher/upload",
     "pages/admin/admin"
   ],
   "window": {
