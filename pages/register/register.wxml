@@ -11,6 +11,27 @@
   <view class="register-form">
     <view class="form-item">
       <view class="label">
+        <text class="label-text">身份</text>
+        <text class="required">*</text>
+      </view>
+      <view class="role-selector">
+        <view class="role-option {{formData.role === 'student' ? 'role-active' : ''}}" 
+              bindtap="selectRole" 
+              data-role="student">
+          <text class="role-icon">🎓</text>
+          <text class="role-name">学生</text>
+        </view>
+        <view class="role-option {{formData.role === 'teacher' ? 'role-active' : ''}}" 
+              bindtap="selectRole" 
+              data-role="teacher">
+          <text class="role-icon">👨‍🏫</text>
+          <text class="role-name">老师</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <view class="label">
         <text class="label-text">昵称</text>
         <text class="required">*</text>
       </view>

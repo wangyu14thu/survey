@@ -4,6 +4,7 @@ const util = require('../../utils/util.js')
 Page({
   data: {
     formData: {
+      role: '', // 身份：student 或 teacher
       nickname: '',
       grade: '',
       region: [],
@@ -34,6 +35,16 @@ Page({
         url: '/pages/index/index'
       })
     }
+  },
+
+  // 选择身份
+  selectRole(e) {
+    const role = e.currentTarget.dataset.role
+    this.setData({
+      'formData.role': role
+    }, () => {
+      this.checkCanSubmit()
+    })
   },
 
   // 输入框变化
@@ -98,8 +109,9 @@ Page({
 
   // 检查是否可以提交
   checkCanSubmit() {
-    const { nickname, grade, region, phone } = this.data.formData
-    const canSubmit = nickname.trim() !== '' &&
+    const { role, nickname, grade, region, phone } = this.data.formData
+    const canSubmit = role !== '' &&
+                     nickname.trim() !== '' &&
                      grade !== '' &&
                      region.length > 0 &&
                      phone.length === 11

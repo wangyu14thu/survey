@@ -31,7 +31,6 @@ Page({
 
   onShow() {
     this.loadVoteStatus()
-    this.loadCourseData()
   },
 
   // 检查用户状态
@@ -86,32 +85,11 @@ Page({
     }
   },
 
-  // 加载课程数据
-  async loadCourseData() {
-    try {
-      const res = await wx.cloud.callFunction({
-        name: 'course',
-        data: {
-          action: 'getCourses'
-        }
-      })
-
-      if (res.result.success) {
-        const coursesData = courses.map(course => {
-          const cloudData = res.result.courses.find(c => c.id === course.id)
-          return {
-            ...course,
-            enrolled: cloudData ? cloudData.enrolled : 0
-          }
-        })
-
-        this.setData({
-          courses: coursesData.slice(0, 2) // 首页只显示2个
-        })
-      }
-    } catch (err) {
-      console.error('加载课程数据失败', err)
-    }
+  // 跳转到主题列表页面
+  navigateToThemesList() {
+    wx.navigateTo({
+      url: '/pages/themes/themes'
+    })
   },
 
   // Banner点击
@@ -139,33 +117,10 @@ Page({
     })
   },
 
-  // 查看所有主题
-  navigateToAllThemes() {
-    wx.navigateTo({
-      url: '/pages/vote-detail/vote-detail?id=1'
-    })
-  },
-
-  // 跳转到主题详情
-  navigateToThemeDetail(e) {
-    const id = e.currentTarget.dataset.id
-    wx.navigateTo({
-      url: `/pages/vote-detail/vote-detail?id=${id}`
-    })
-  },
-
   // 跳转到课程列表
   navigateToCourses() {
     wx.navigateTo({
       url: '/pages/courses/courses'
-    })
-  },
-
-  // 跳转到课程详情
-  navigateToCourseDetail(e) {
-    const id = e.currentTarget.dataset.id
-    wx.navigateTo({
-      url: `/pages/course-detail/course-detail?id=${id}`
     })
   }
 })

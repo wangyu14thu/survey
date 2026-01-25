@@ -36,10 +36,35 @@
   gap: 12rpx;
 }
 
+.user-name-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
 .user-name {
   font-size: 40rpx;
   font-weight: bold;
   color: white;
+}
+
+.role-badge {
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 22rpx;
+  font-weight: bold;
+}
+
+.role-badge.role-student {
+  background-color: rgba(74, 144, 226, 0.3);
+  color: white;
+  border: 1rpx solid rgba(255, 255, 255, 0.5);
+}
+
+.role-badge.role-teacher {
+  background-color: rgba(255, 215, 0, 0.3);
+  color: white;
+  border: 1rpx solid rgba(255, 255, 255, 0.5);
 }
 
 .user-school {

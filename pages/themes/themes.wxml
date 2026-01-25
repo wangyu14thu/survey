@@ -1,0 +1,30 @@
+<!--社会实践主题列表页面-->
+<view class="themes-container">
+  <view class="themes-header">
+    <text class="header-title">六大实践主题</text>
+    <text class="header-subtitle">选择您感兴趣的主题，查看详细信息</text>
+  </view>
+
+  <view class="themes-list">
+    <view class="theme-card" 
+          wx:for="{{themes}}" 
+          wx:key="id"
+          bindtap="navigateToDetail"
+          data-id="{{item.id}}">
+      <view class="theme-cover">
+        <image class="cover-image" src="{{item.cover}}" mode="aspectFill"></image>
+        <view class="theme-overlay">
+          <text class="theme-icon">{{item.icon}}</text>
+        </view>
+      </view>
+      <view class="theme-info">
+        <view class="theme-name">{{item.name}}</view>
+        <view class="theme-location">
+          <text class="location-icon">📍</text>
+          <text class="location-text">{{item.location}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+

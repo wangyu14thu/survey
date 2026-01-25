@@ -3,10 +3,15 @@
   <!-- 用户信息卡片 -->
   <view class="user-card">
     <view class="user-avatar">
-      <text class="avatar-icon">👤</text>
+      <text class="avatar-icon">{{userInfo.role === 'teacher' ? '👨‍🏫' : '🎓'}}</text>
     </view>
     <view class="user-info">
-      <text class="user-name">{{userInfo.nickname || '未登录'}}</text>
+      <view class="user-name-row">
+        <text class="user-name">{{userInfo.nickname || '未登录'}}</text>
+        <view class="role-badge {{userInfo.role === 'teacher' ? 'role-teacher' : 'role-student'}}">
+          {{userInfo.role === 'teacher' ? '老师' : '学生'}}
+        </view>
+      </view>
       <text class="user-school">{{userInfo.grade || ''}} · {{userInfo.region || ''}}</text>
     </view>
   </view>

@@ -38,7 +38,7 @@ exports.main = async (event, context) => {
 
 // 用户注册
 async function register(event) {
-  const { openid, nickname, grade, region, phone, registerTime } = event
+  const { openid, role, nickname, grade, region, phone, registerTime } = event
 
   // 检查是否已注册
   const userResult = await db.collection('users')
@@ -58,6 +58,7 @@ async function register(event) {
         message: '欢迎回来',
         userInfo: {
           openid: existingUser.openid,
+          role: existingUser.role,
           nickname: existingUser.nickname,
           grade: existingUser.grade,
           region: existingUser.region,
@@ -78,6 +79,7 @@ async function register(event) {
   await db.collection('users').add({
     data: {
       openid,
+      role, // 添加身份字段
       nickname,
       grade,
       region: region.join(' '),
@@ -92,6 +94,7 @@ async function register(event) {
     message: '注册成功',
     userInfo: {
       openid,
+      role,
       nickname,
       grade,
       region: region.join(' '),
@@ -115,6 +118,7 @@ async function getUserInfo(event) {
       success: true,
       userInfo: {
         openid: user.openid,
+        role: user.role,
         nickname: user.nickname,
         grade: user.grade,
         region: user.region,

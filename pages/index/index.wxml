@@ -50,60 +50,30 @@
   </view>
 
   <!-- 社会实践活动板块 -->
-  <view class="section-card">
-    <view class="section-header">
-      <view class="header-left">
-        <text class="section-icon">🎯</text>
-        <view class="header-text">
-          <text class="section-title">社会实践活动</text>
-          <text class="section-subtitle">丰富多彩的实践主题</text>
-        </view>
-      </view>
-      <view class="header-right" bindtap="navigateToAllThemes">
-        <text class="link-text">查看全部</text>
-        <text class="arrow">›</text>
-      </view>
+  <view class="section-card entry-card" bindtap="navigateToThemesList">
+    <view class="entry-icon-large">
+      <text class="entry-emoji">🎯</text>
     </view>
-
-    <!-- 实践主题网格 -->
-    <view class="themes-grid">
-      <view class="theme-item" wx:for="{{themes}}" wx:key="id" wx:if="{{index < 6}}" bindtap="navigateToThemeDetail" data-id="{{item.id}}">
-        <view class="theme-icon-wrapper">
-          <text class="theme-icon">{{item.icon}}</text>
-        </view>
-        <text class="theme-name">{{item.name}}</text>
-      </view>
+    <view class="entry-content">
+      <text class="entry-title">社会实践活动</text>
+      <text class="entry-desc">六大实践主题，丰富课外生活</text>
+    </view>
+    <view class="entry-arrow-wrapper">
+      <text class="entry-arrow">›</text>
     </view>
   </view>
 
   <!-- 精品课程板块 -->
-  <view class="section-card">
-    <view class="section-header">
-      <view class="header-left">
-        <text class="section-icon">📚</text>
-        <view class="header-text">
-          <text class="section-title">精品课程</text>
-          <text class="section-subtitle">专业的职业体验课程</text>
-        </view>
-      </view>
-      <view class="header-right" bindtap="navigateToCourses">
-        <text class="link-text">查看全部</text>
-        <text class="arrow">›</text>
-      </view>
+  <view class="section-card entry-card" bindtap="navigateToCourses">
+    <view class="entry-icon-large">
+      <text class="entry-emoji">📚</text>
     </view>
-
-    <!-- 课程列表 -->
-    <view class="courses-preview">
-      <view class="course-card-mini" wx:for="{{courses}}" wx:key="id" bindtap="navigateToCourseDetail" data-id="{{item.id}}">
-        <image class="course-cover-mini" src="{{item.cover}}" mode="aspectFill"></image>
-        <view class="course-info-mini">
-          <view class="course-title-mini">{{item.title}}</view>
-          <view class="course-meta-mini">
-            <text class="course-price">¥{{item.price}}</text>
-            <text class="course-quota">剩余{{item.quota - item.enrolled}}名额</text>
-          </view>
-        </view>
-      </view>
+    <view class="entry-content">
+      <text class="entry-title">精品课程</text>
+      <text class="entry-desc">专业职业体验，助力成长</text>
+    </view>
+    <view class="entry-arrow-wrapper">
+      <text class="entry-arrow">›</text>
     </view>
   </view>
 </view>

@@ -4,6 +4,7 @@
     "pages/authorization/authorization",
     "pages/register/register",
     "pages/message/message",
+    "pages/themes/themes",
     "pages/vote/vote",
     "pages/vote-detail/vote-detail",
     "pages/result/result",

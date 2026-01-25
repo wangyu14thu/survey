@@ -156,110 +156,59 @@
 }
 
 /* 实践主题网格 */
-.themes-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24rpx;
-}
-
-.theme-item {
+.entry-card {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  padding: 20rpx;
-  background-color: #f8f9fa;
-  border-radius: 16rpx;
+  padding: 40rpx 30rpx;
   transition: all 0.3s;
 }
 
-.theme-item:active {
-  transform: scale(0.95);
-  background-color: #e9ecef;
+.entry-card:active {
+  transform: scale(0.98);
+  background-color: #f8f9fa;
 }
 
-.theme-icon-wrapper {
-  width: 100rpx;
-  height: 100rpx;
+.entry-icon-large {
+  width: 120rpx;
+  height: 120rpx;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 20rpx;
+  border-radius: 24rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 16rpx;
-}
-
-.theme-icon {
-  font-size: 56rpx;
-}
-
-.theme-name {
-  font-size: 24rpx;
-  color: #333;
-  text-align: center;
-  line-height: 1.4;
-}
-
-/* 课程预览 */
-.courses-preview {
-  display: flex;
-  flex-direction: column;
-  gap: 20rpx;
-}
-
-.course-card-mini {
-  display: flex;
-  background-color: #f8f9fa;
-  border-radius: 16rpx;
-  overflow: hidden;
-  transition: all 0.3s;
-}
-
-.course-card-mini:active {
-  transform: scale(0.98);
-}
-
-.course-cover-mini {
-  width: 180rpx;
-  height: 120rpx;
+  margin-right: 24rpx;
   flex-shrink: 0;
 }
 
-.course-info-mini {
+.entry-emoji {
+  font-size: 64rpx;
+}
+
+.entry-content {
   flex: 1;
-  padding: 16rpx 20rpx;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
-.course-title-mini {
-  font-size: 28rpx;
-  font-weight: bold;
-  color: #333;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  line-height: 1.4;
-}
-
-.course-meta-mini {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.course-price {
+.entry-title {
   font-size: 32rpx;
   font-weight: bold;
-  color: #ff6b6b;
+  color: #333;
+  margin-bottom: 8rpx;
 }
 
-.course-quota {
-  font-size: 22rpx;
-  color: #4A90E2;
-  background-color: #e8f4ff;
-  padding: 4rpx 12rpx;
-  border-radius: 12rpx;
+.entry-desc {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.entry-arrow-wrapper {
+  margin-left: 20rpx;
+}
+
+.entry-arrow {
+  font-size: 56rpx;
+  color: #ddd;
+  transform: rotate(90deg);
+  display: block;
 }

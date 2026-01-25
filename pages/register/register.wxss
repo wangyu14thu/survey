@@ -69,6 +69,49 @@
   font-size: 28rpx;
 }
 
+/* 身份选择器 */
+.role-selector {
+  display: flex;
+  gap: 20rpx;
+}
+
+.role-option {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30rpx 20rpx;
+  background-color: #f5f7fa;
+  border-radius: 12rpx;
+  border: 2rpx solid transparent;
+  transition: all 0.3s;
+}
+
+.role-option:active {
+  transform: scale(0.98);
+}
+
+.role-option.role-active {
+  background-color: #e8f4ff;
+  border-color: #4A90E2;
+}
+
+.role-icon {
+  font-size: 56rpx;
+  margin-bottom: 12rpx;
+}
+
+.role-name {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.role-option.role-active .role-name {
+  color: #4A90E2;
+  font-weight: bold;
+}
+
 .tip-icon {
   margin-left: 12rpx;
   width: 32rpx;
