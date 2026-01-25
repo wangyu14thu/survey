@@ -1,0 +1,166 @@
+/* pages/courses/courses.wxss */
+.courses-container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding-bottom: 30rpx;
+}
+
+.courses-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 60rpx 40rpx;
+  text-align: center;
+  color: white;
+}
+
+.header-title {
+  display: block;
+  font-size: 48rpx;
+  font-weight: bold;
+  margin-bottom: 12rpx;
+}
+
+.header-subtitle {
+  display: block;
+  font-size: 28rpx;
+  opacity: 0.9;
+}
+
+/* 课程列表 */
+.courses-list {
+  padding: 20rpx;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20rpx;
+}
+
+.course-card {
+  width: calc(50% - 10rpx);
+  background-color: white;
+  border-radius: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+}
+
+.course-card:active {
+  transform: scale(0.95);
+}
+
+/* 课程封面 */
+.course-cover {
+  position: relative;
+  height: 240rpx;
+}
+
+.cover-image {
+  width: 100%;
+  height: 100%;
+}
+
+.course-tag {
+  position: absolute;
+  top: 16rpx;
+  left: 16rpx;
+  background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+  color: white;
+  padding: 6rpx 16rpx;
+  border-radius: 16rpx;
+  font-size: 22rpx;
+  font-weight: bold;
+  box-shadow: 0 2rpx 8rpx rgba(255, 107, 107, 0.4);
+}
+
+/* 课程信息 */
+.course-info {
+  padding: 20rpx;
+}
+
+.course-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 16rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.4;
+  min-height: 78rpx;
+}
+
+/* 课程元信息 */
+.course-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+  margin-bottom: 16rpx;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+}
+
+.meta-icon {
+  font-size: 24rpx;
+  margin-right: 6rpx;
+}
+
+.meta-text {
+  font-size: 22rpx;
+  color: #999;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 报名信息 */
+.enrollment-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.price-tag {
+  color: #ff6b6b;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.quota-tag {
+  font-size: 22rpx;
+  color: #4A90E2;
+  background-color: #e8f4ff;
+  padding: 6rpx 12rpx;
+  border-radius: 12rpx;
+}
+
+/* 空状态 */
+.empty-state {
+  padding: 120rpx 60rpx;
+  text-align: center;
+}
+
+.empty-image {
+  width: 400rpx;
+  height: 400rpx;
+  opacity: 0.3;
+}
+
+.empty-text {
+  display: block;
+  font-size: 32rpx;
+  color: #999;
+  margin-top: 40rpx;
+  margin-bottom: 16rpx;
+}
+
+.empty-tip {
+  display: block;
+  font-size: 26rpx;
+  color: #ccc;
+}
+

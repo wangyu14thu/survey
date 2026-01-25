@@ -1,0 +1,48 @@
+<!--投票详情页面-->
+<view class="detail-container">
+  <view class="detail-header">
+    <image class="header-image" src="{{theme.cover}}" mode="aspectFill"></image>
+    <view class="header-overlay">
+      <text class="theme-icon">{{theme.icon}}</text>
+      <text class="theme-name">{{theme.name}}</text>
+    </view>
+  </view>
+
+  <view class="detail-content">
+    <view class="info-section">
+      <view class="section-title">
+        <text class="title-icon">📍</text>
+        <text>实践地点</text>
+      </view>
+      <view class="info-text">{{theme.location}}</view>
+    </view>
+
+    <view class="info-section">
+      <view class="section-title">
+        <text class="title-icon">📝</text>
+        <text>活动简介</text>
+      </view>
+      <view class="info-text">{{theme.description}}</view>
+    </view>
+
+    <view class="info-section">
+      <view class="section-title">
+        <text class="title-icon">🎯</text>
+        <text>实践活动</text>
+      </view>
+      <view class="activities-list">
+        <view class="activity-item" wx:for="{{theme.activities}}" wx:key="index">
+          <text class="activity-dot"></text>
+          <text class="activity-text">{{item}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="bottom-bar">
+    <button class="btn-vote {{hasVoted ? 'btn-disabled' : 'btn-primary'}}" bindtap="voteForTheme" disabled="{{hasVoted}}">
+      {{hasVoted ? '已投票' : '投票支持'}}
+    </button>
+  </view>
+</view>
+

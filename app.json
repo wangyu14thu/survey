@@ -1,0 +1,70 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/authorization/authorization",
+    "pages/register/register",
+    "pages/vote/vote",
+    "pages/vote-detail/vote-detail",
+    "pages/result/result",
+    "pages/album/album",
+    "pages/certificate/certificate",
+    "pages/courses/courses",
+    "pages/course-detail/course-detail",
+    "pages/order/order",
+    "pages/profile/profile",
+    "pages/teacher/upload",
+    "pages/admin/admin"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#4A90E2",
+    "navigationBarTitleText": "社会实践投票",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f5f5f5"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#4A90E2",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home-active.png"
+      },
+      {
+        "pagePath": "pages/album/album",
+        "text": "相册",
+        "iconPath": "images/album.png",
+        "selectedIconPath": "images/album-active.png"
+      },
+      {
+        "pagePath": "pages/courses/courses",
+        "text": "精品课",
+        "iconPath": "images/course.png",
+        "selectedIconPath": "images/course-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "images/profile.png",
+        "selectedIconPath": "images/profile-active.png"
+      }
+    ]
+  },
+  "cloud": true,
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于活动地点推荐"
+    }
+  },
+  "requiredPrivateInfos": [
+    "getLocation"
+  ],
+  "usingComponents": {},
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
+

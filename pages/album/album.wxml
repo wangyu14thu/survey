@@ -1,0 +1,88 @@
+<!--云端相册页面-->
+<view class="album-container">
+  <view class="album-header">
+    <text class="header-title">云端相册</text>
+    <text class="header-subtitle">记录每一个精彩瞬间</text>
+  </view>
+
+  <!-- 我的班级相册 -->
+  <view class="my-class-section" wx:if="{{myClassAlbum && myClassAlbum.photos.length > 0}}">
+    <view class="section-header">
+      <view class="header-left">
+        <text class="section-icon">🎯</text>
+        <text class="section-title">我的班级</text>
+      </view>
+      <view class="class-badge">{{userInfo.className}}</view>
+    </view>
+    
+    <view class="album-card featured">
+      <view class="album-info">
+        <text class="album-title">{{myClassAlbum.activityName}}</text>
+        <text class="album-meta">{{myClassAlbum.date}} · {{myClassAlbum.photos.length}}张照片</text>
+      </view>
+      <view class="photo-grid">
+        <image 
+          class="photo-item" 
+          wx:for="{{myClassAlbum.photos}}" 
+          wx:key="index"
+          wx:if="{{index < 6}}"
+          src="{{item.url}}" 
+          mode="aspectFill"
+          bindtap="previewPhoto"
+          data-urls="{{myClassAlbum.photoUrls}}"
+          data-index="{{index}}">
+        </image>
+        <view class="photo-more" wx:if="{{myClassAlbum.photos.length > 6}}" bindtap="viewAlbumDetail" data-album="{{myClassAlbum}}">
+          <text class="more-text">+{{myClassAlbum.photos.length - 6}}</text>
+        </view>
+      </view>
+      <view class="album-actions">
+        <button class="action-btn" bindtap="downloadAll" data-album="{{myClassAlbum}}">
+          <text class="btn-icon">📥</text>
+          <text class="btn-text">保存全部</text>
+        </button>
+        <button class="action-btn" bindtap="shareAlbum" data-album="{{myClassAlbum}}">
+          <text class="btn-icon">📤</text>
+          <text class="btn-text">分享</text>
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 全校精彩瞬间 -->
+  <view class="school-section" wx:if="{{schoolAlbums.length > 0}}">
+    <view class="section-header">
+      <view class="header-left">
+        <text class="section-icon">🏫</text>
+        <text class="section-title">全校精彩瞬间</text>
+      </view>
+    </view>
+
+    <view class="albums-list">
+      <view class="album-card" wx:for="{{schoolAlbums}}" wx:key="id" bindtap="viewAlbumDetail" data-album="{{item}}">
+        <view class="album-cover">
+          <image class="cover-image" src="{{item.cover}}" mode="aspectFill"></image>
+          <view class="cover-badge">{{item.className}}</view>
+        </view>
+        <view class="album-info">
+          <text class="album-title">{{item.activityName}}</text>
+          <text class="album-meta">{{item.date}} · {{item.photoCount}}张照片</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{!myClassAlbum && schoolAlbums.length === 0}}">
+    <image class="empty-image" src="/images/empty-album.png" mode="aspectFit"></image>
+    <text class="empty-text">还没有活动照片</text>
+    <text class="empty-tip">实践活动结束后，老师会上传照片哦</text>
+  </view>
+
+  <!-- 教师入口 -->
+  <view class="teacher-entry" wx:if="{{isTeacher}}" bindtap="navigateToUpload">
+    <text class="entry-icon">📷</text>
+    <text class="entry-text">教师上传照片</text>
+  </view>
+</view>
+

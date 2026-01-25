@@ -1,0 +1,99 @@
+<!--管理后台页面-->
+<view class="admin-container">
+  <view class="admin-header">
+    <text class="header-title">管理后台</text>
+    <text class="header-subtitle">数据概览与管理</text>
+  </view>
+
+  <!-- 统计卡片 -->
+  <view class="stats-grid">
+    <view class="stat-card">
+      <text class="stat-icon">🗳️</text>
+      <text class="stat-number">{{stats.totalVotes}}</text>
+      <text class="stat-label">总投票数</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-icon">👥</text>
+      <text class="stat-number">{{stats.totalUsers}}</text>
+      <text class="stat-label">注册用户</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-icon">📚</text>
+      <text class="stat-number">{{stats.totalOrders}}</text>
+      <text class="stat-label">课程订单</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-icon">📷</text>
+      <text class="stat-number">{{stats.totalAlbums}}</text>
+      <text class="stat-label">相册数量</text>
+    </view>
+  </view>
+
+  <!-- 投票管理 -->
+  <view class="management-section">
+    <view class="section-header">
+      <text class="section-title">投票管理</text>
+    </view>
+    
+    <view class="vote-results card">
+      <view class="results-header">
+        <text class="results-title">各主题票数统计</text>
+        <button class="btn-action" bindtap="refreshVotes">刷新</button>
+      </view>
+      
+      <view class="results-list">
+        <view class="result-item" wx:for="{{voteResults}}" wx:key="id">
+          <view class="result-left">
+            <text class="result-rank">{{index + 1}}</text>
+            <text class="result-name">{{item.themeName}}</text>
+          </view>
+          <view class="result-right">
+            <text class="result-votes">{{item.votes}}票</text>
+            <text class="result-percent">{{item.percent}}%</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="vote-controls">
+        <button class="btn-control" bindtap="endVote">截止投票</button>
+        <button class="btn-control primary" bindtap="publishResult">公布结果</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 课程报名管理 -->
+  <view class="management-section">
+    <view class="section-header">
+      <text class="section-title">课程报名管理</text>
+    </view>
+    
+    <view class="course-list card">
+      <view class="course-item" wx:for="{{courses}}" wx:key="id">
+        <view class="course-info">
+          <text class="course-name">{{item.title}}</text>
+          <view class="course-progress">
+            <view class="progress-bar">
+              <view class="progress-fill" style="width: {{(item.enrolled / item.quota) * 100}}%;"></view>
+            </view>
+            <text class="progress-text">{{item.enrolled}}/{{item.quota}}人</text>
+          </view>
+        </view>
+        <button class="btn-manage" bindtap="manageCourse" data-id="{{item.id}}">管理名额</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 数据导出 -->
+  <view class="management-section">
+    <view class="section-header">
+      <text class="section-title">数据导出</text>
+    </view>
+    
+    <view class="export-card card">
+      <button class="btn-export" bindtap="exportVotes">导出投票数据</button>
+      <button class="btn-export" bindtap="exportUsers">导出用户数据</button>
+      <button class="btn-export" bindtap="exportOrders">导出订单数据</button>
+    </view>
+  </view>
+</view>
+

@@ -1,0 +1,32 @@
+# 微信小程序
+node_modules/
+miniprogram_npm/
+
+# 云函数
+cloudfunctions/**/node_modules/
+
+# 开发工具
+.DS_Store
+Thumbs.db
+
+# 日志文件
+*.log
+npm-debug.log*
+
+# 临时文件
+*.tmp
+*.temp
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 私密配置（如果有的话）
+config/private.js
+
+# 构建产物
+dist/
+build/
+

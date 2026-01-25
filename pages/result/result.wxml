@@ -1,0 +1,75 @@
+<!--投票结果公示页面-->
+<view class="result-container">
+  <view class="result-header">
+    <text class="header-title">🏆 投票结果公布</text>
+    <text class="header-subtitle">感谢 {{totalVotes}} 位同学的参与</text>
+  </view>
+
+  <!-- 冠军主题 -->
+  <view class="winner-card">
+    <view class="winner-badge">
+      <text class="badge-icon">👑</text>
+      <text class="badge-text">人气冠军</text>
+    </view>
+    <view class="winner-content">
+      <text class="winner-icon">{{winner.icon}}</text>
+      <text class="winner-name">{{winner.name}}</text>
+      <text class="winner-location">{{winner.location}}</text>
+      <view class="winner-stats">
+        <text class="votes-number">{{winner.votes}}</text>
+        <text class="votes-text">票</text>
+        <text class="votes-percent">占比 {{winner.percent}}%</text>
+      </view>
+    </view>
+    <view class="winner-activities">
+      <text class="activities-title">即将开展的活动：</text>
+      <view class="activities-list">
+        <text class="activity-item" wx:for="{{winner.activities}}" wx:key="index">• {{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 其他主题排名 -->
+  <view class="ranking-section">
+    <view class="section-title">完整排名</view>
+    <view class="ranking-list">
+      <view class="ranking-item" wx:for="{{rankings}}" wx:key="id">
+        <view class="rank-number rank-{{index + 1}}">{{index + 1}}</view>
+        <text class="rank-icon">{{item.icon}}</text>
+        <view class="rank-info">
+          <text class="rank-name">{{item.name}}</text>
+          <view class="rank-bar-container">
+            <view class="rank-bar" style="width: {{item.percent}}%;"></view>
+          </view>
+        </view>
+        <view class="rank-votes">
+          <text class="votes-number">{{item.votes}}</text>
+          <text class="votes-unit">票</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 实践通知 -->
+  <view class="notice-card">
+    <view class="notice-header">
+      <text class="notice-icon">📢</text>
+      <text class="notice-title">实践活动通知</text>
+    </view>
+    <view class="notice-content">
+      <text class="notice-text">根据投票结果，我们将组织"{{winner.name}}"主题的社会实践活动。</text>
+      <text class="notice-text">具体时间和安排将通过班级群通知，请保持关注。</text>
+      <text class="notice-text">活动照片将上传至云端相册，精彩瞬间不容错过！</text>
+    </view>
+  </view>
+
+  <view class="action-buttons">
+    <button class="btn-action btn-secondary" bindtap="navigateToDetail">
+      查看主题详情
+    </button>
+    <button class="btn-action btn-primary" bindtap="shareResult">
+      分享结果
+    </button>
+  </view>
+</view>
+
