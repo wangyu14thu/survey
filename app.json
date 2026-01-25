@@ -3,6 +3,7 @@
     "pages/index/index",
     "pages/authorization/authorization",
     "pages/register/register",
+    "pages/message/message",
     "pages/vote/vote",
     "pages/vote-detail/vote-detail",
     "pages/result/result",
@@ -32,25 +33,19 @@
         "pagePath": "pages/index/index",
         "text": "首页",
         "iconPath": "images/home.png",
-        "selectedIconPath": "images/home-active.png"
+        "selectedIconPath": "images/home.png"
       },
       {
-        "pagePath": "pages/album/album",
-        "text": "相册",
+        "pagePath": "pages/message/message",
+        "text": "消息",
         "iconPath": "images/album.png",
-        "selectedIconPath": "images/album-active.png"
-      },
-      {
-        "pagePath": "pages/courses/courses",
-        "text": "精品课",
-        "iconPath": "images/course.png",
-        "selectedIconPath": "images/course-active.png"
+        "selectedIconPath": "images/album.png"
       },
       {
         "pagePath": "pages/profile/profile",
         "text": "我的",
         "iconPath": "images/profile.png",
-        "selectedIconPath": "images/profile-active.png"
+        "selectedIconPath": "images/profile.png"
       }
     ]
   },

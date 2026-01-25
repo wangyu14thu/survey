@@ -1,0 +1,41 @@
+<!--消息页面-->
+<view class="message-container">
+  <!-- 顶部操作栏 -->
+  <view class="header-actions" wx:if="{{messages.length > 0}}">
+    <text class="action-text" bindtap="markAllRead">全部已读</text>
+  </view>
+
+  <!-- 消息列表 -->
+  <view class="message-list" wx:if="{{messages.length > 0}}">
+    <view class="message-item {{!item.read ? 'unread' : ''}}" 
+          wx:for="{{messages}}" 
+          wx:key="id"
+          bindtap="viewMessage"
+          data-id="{{item.id}}">
+      <view class="message-icon">
+        <text class="icon-emoji" wx:if="{{item.type === 'system'}}">📢</text>
+        <text class="icon-emoji" wx:if="{{item.type === 'course'}}">📚</text>
+        <text class="icon-emoji" wx:if="{{item.type === 'vote'}}">🗳️</text>
+        <view class="unread-badge" wx:if="{{!item.read}}"></view>
+      </view>
+      
+      <view class="message-content">
+        <view class="message-header">
+          <text class="message-title">{{item.title}}</text>
+          <text class="message-time">{{item.time}}</text>
+        </view>
+        <text class="message-text">{{item.content}}</text>
+      </view>
+      
+      <view class="message-arrow">›</view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{messages.length === 0}}">
+    <text class="empty-icon">📭</text>
+    <text class="empty-text">暂无消息</text>
+    <text class="empty-tip">系统消息和活动通知将在这里显示</text>
+  </view>
+</view>
+

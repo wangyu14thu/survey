@@ -7,7 +7,7 @@
     </view>
     <view class="user-info">
       <text class="user-name">{{userInfo.nickname || '未登录'}}</text>
-      <text class="user-school">{{userInfo.school || ''}} {{userInfo.grade || ''}}</text>
+      <text class="user-school">{{userInfo.grade || ''}} · {{userInfo.region || ''}}</text>
     </view>
   </view>
 

@@ -7,71 +7,103 @@
     </swiper-item>
   </swiper>
 
-  <!-- 投票状态提示 -->
-  <view class="vote-status-card" wx:if="{{voteStatus}}">
-    <view class="status-header">
-      <text class="status-icon">{{voteStatus.icon}}</text>
-      <text class="status-title">{{voteStatus.title}}</text>
-    </view>
-    <view class="status-content">
-      <text class="status-text">{{voteStatus.content}}</text>
-      <view class="countdown" wx:if="{{voteStatus.showCountdown}}">
-        <text class="countdown-text">{{countdownText}}</text>
+  <!-- 投票活动板块 -->
+  <view class="section-card vote-section">
+    <view class="section-header">
+      <view class="header-left">
+        <text class="section-icon">🗳️</text>
+        <view class="header-text">
+          <text class="section-title">主题投票活动</text>
+          <text class="section-subtitle">选出你最喜欢的实践主题</text>
+        </view>
+      </view>
+      <view class="header-right" bindtap="navigateToResult" wx:if="{{voteEnded}}">
+        <text class="link-text">查看结果</text>
+        <text class="arrow">›</text>
       </view>
     </view>
-    <button class="status-btn" bindtap="navigateToVote" wx:if="{{voteStatus.showButton}}">
-      {{voteStatus.buttonText}}
-    </button>
+
+    <!-- 投票状态 -->
+    <view class="vote-status">
+      <view class="status-item">
+        <text class="status-label">活动状态</text>
+        <text class="status-value {{voteEnded ? 'ended' : 'ongoing'}}">
+          {{voteEnded ? '已结束' : '进行中'}}
+        </text>
+      </view>
+      <view class="status-item">
+        <text class="status-label">截止时间</text>
+        <text class="status-value">2026-03-01</text>
+      </view>
+      <view class="status-item">
+        <text class="status-label">参与人数</text>
+        <text class="status-value highlight">{{totalVotes}}人</text>
+      </view>
+    </view>
+
+    <!-- 投票按钮或已投票提示 -->
+    <view class="vote-action" wx:if="{{!voteEnded}}">
+      <button class="btn-vote {{hasVoted ? 'btn-disabled' : 'btn-primary'}}" bindtap="navigateToVote" disabled="{{hasVoted}}">
+        {{hasVoted ? '✓ 已投票' : '立即投票'}}
+      </button>
+    </view>
   </view>
 
-  <!-- 投票主题卡片 -->
-  <view class="section-header">
-    <text class="section-title">实践主题投票</text>
-    <text class="section-subtitle">民主选择，你说了算</text>
-  </view>
+  <!-- 社会实践活动板块 -->
+  <view class="section-card">
+    <view class="section-header">
+      <view class="header-left">
+        <text class="section-icon">🎯</text>
+        <view class="header-text">
+          <text class="section-title">社会实践活动</text>
+          <text class="section-subtitle">丰富多彩的实践主题</text>
+        </view>
+      </view>
+      <view class="header-right" bindtap="navigateToAllThemes">
+        <text class="link-text">查看全部</text>
+        <text class="arrow">›</text>
+      </view>
+    </view>
 
-  <view class="themes-container">
-    <view class="theme-card" wx:for="{{themes}}" wx:key="id" bindtap="navigateToDetail" data-id="{{item.id}}">
-      <view class="theme-cover">
-        <image class="cover-image" src="{{item.cover}}" mode="aspectFill"></image>
-        <view class="theme-overlay">
+    <!-- 实践主题网格 -->
+    <view class="themes-grid">
+      <view class="theme-item" wx:for="{{themes}}" wx:key="id" wx:if="{{index < 6}}" bindtap="navigateToThemeDetail" data-id="{{item.id}}">
+        <view class="theme-icon-wrapper">
           <text class="theme-icon">{{item.icon}}</text>
         </view>
+        <text class="theme-name">{{item.name}}</text>
       </view>
-      <view class="theme-info">
-        <view class="theme-name">{{item.name}}</view>
-        <view class="theme-location">
-          <text class="location-icon"></text>
-          <text class="location-text">{{item.location}}</text>
+    </view>
+  </view>
+
+  <!-- 精品课程板块 -->
+  <view class="section-card">
+    <view class="section-header">
+      <view class="header-left">
+        <text class="section-icon">📚</text>
+        <view class="header-text">
+          <text class="section-title">精品课程</text>
+          <text class="section-subtitle">专业的职业体验课程</text>
         </view>
       </view>
+      <view class="header-right" bindtap="navigateToCourses">
+        <text class="link-text">查看全部</text>
+        <text class="arrow">›</text>
+      </view>
     </view>
-  </view>
 
-  <!-- 参与统计 -->
-  <view class="stats-card" wx:if="{{totalVotes > 0}}">
-    <text class="stats-icon"></text>
-    <text class="stats-text">已有 <text class="stats-number">{{totalVotes}}</text> 人参与投票</text>
-  </view>
-
-  <!-- 快捷入口 -->
-  <view class="quick-entry">
-    <view class="entry-item" bindtap="navigateToAlbum">
-      <view class="entry-icon"></view>
-      <text class="entry-text">云端相册</text>
-    </view>
-    <view class="entry-item" bindtap="navigateToCertificate">
-      <view class="entry-icon"></view>
-      <text class="entry-text">我的证书</text>
-    </view>
-    <view class="entry-item" bindtap="navigateToCourses">
-      <view class="entry-icon badge"></view>
-      <text class="entry-text">精品课程</text>
-    </view>
-    <view class="entry-item" bindtap="navigateToOrder">
-      <view class="entry-icon"></view>
-      <text class="entry-text">我的订单</text>
+    <!-- 课程列表 -->
+    <view class="courses-preview">
+      <view class="course-card-mini" wx:for="{{courses}}" wx:key="id" bindtap="navigateToCourseDetail" data-id="{{item.id}}">
+        <image class="course-cover-mini" src="{{item.cover}}" mode="aspectFill"></image>
+        <view class="course-info-mini">
+          <view class="course-title-mini">{{item.title}}</view>
+          <view class="course-meta-mini">
+            <text class="course-price">¥{{item.price}}</text>
+            <text class="course-quota">剩余{{item.quota - item.enrolled}}名额</text>
+          </view>
+        </view>
+      </view>
     </view>
   </view>
 </view>
-
