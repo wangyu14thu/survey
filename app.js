@@ -1,4 +1,4 @@
-// app.js
+// app.js - PBL营（教师端）
 App({
   onLaunch() {
     // 初始化云开发环境
@@ -7,7 +7,7 @@ App({
     } else {
       wx.cloud.init({
         traceUser: true,
-        env: 'cloud1-9gpi4pkt9a8bce92' // 替换为你的云开发环境ID
+        env: 'cloud1-9gpi4pkt9a8bce92' // 云开发环境ID
       });
       console.log('云开发初始化完成');
     }
@@ -18,18 +18,19 @@ App({
 
   // 检查登录状态
   checkLoginStatus() {
-    const userInfo = wx.getStorageSync('userInfo');
+    const userInfo = wx.getStorageSync('teacherInfo');
     if (userInfo) {
-      this.globalData.userInfo = userInfo;
-      this.globalData.isAuthorized = wx.getStorageSync('isAuthorized') || false;
+      this.globalData.teacherInfo = userInfo;
+      this.globalData.openid = userInfo.openid;
+      this.globalData.points = userInfo.points || 0;
     }
   },
 
   // 全局数据
   globalData: {
-    userInfo: null,
-    isAuthorized: false,
-    openid: null
+    teacherInfo: null,
+    openid: null,
+    points: 0 // 积分
   }
 });
 

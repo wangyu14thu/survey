@@ -1,50 +1,40 @@
 // pages/profile/profile.js
-const util = require('../../utils/util.js')
+const app = getApp()
 
 Page({
   data: {
-    userInfo: null,
+    teacherInfo: null,
     stats: {
-      certificates: 0,
-      orders: 0,
-      records: 0
+      uploads: 0,
+      purchased: 0
     }
-  },
-
-  onLoad() {
-    this.loadUserData()
   },
 
   onShow() {
-    this.loadUserData()
+    this.loadTeacherInfo()
+    this.loadStats()
   },
 
-  // 加载用户数据
-  async loadUserData() {
-    const userInfo = util.checkRegistration()
-    
-    if (!userInfo) {
-      wx.redirectTo({
-        url: '/pages/authorization/authorization'
+  // 加载教师信息
+  loadTeacherInfo() {
+    const teacherInfo = wx.getStorageSync('teacherInfo')
+    if (teacherInfo) {
+      this.setData({
+        teacherInfo
       })
-      return
     }
-
-    this.setData({ userInfo })
-    this.loadStats()
   },
 
   // 加载统计数据
   async loadStats() {
     try {
       const res = await wx.cloud.callFunction({
-        name: 'user',
+        name: 'teacher',
         data: {
           action: 'getStats',
-          openid: getApp().globalData.openid
+          openid: app.globalData.openid
         }
       })
-
       if (res.result.success) {
         this.setData({
           stats: res.result.stats
@@ -55,92 +45,38 @@ Page({
     }
   },
 
-  // 跳转到证书页面
-  navigateToCertificate() {
+  // 编辑资料
+  editProfile() {
+    wx.showToast({
+      title: '功能开发中',
+      icon: 'none'
+    })
+  },
+
+  // 上传作品
+  uploadWork() {
     wx.navigateTo({
-      url: '/pages/certificate/certificate'
+      url: '/pages/upload/upload'
     })
   },
 
-  // 跳转到订单页面
-  navigateToOrder() {
-    wx.navigateTo({
-      url: '/pages/order/order'
-    })
-  },
-
-  // 跳转到相册页面
-  navigateToRecords() {
-    wx.navigateTo({
-      url: '/pages/records/records'
-    })
-  },
-
-  // 跳转到课程页面
-  navigateToCourses() {
-    wx.switchTab({
-      url: '/pages/courses/courses'
-    })
-  },
-
-  // 跳转到投票页面
-  navigateToVote() {
-    wx.navigateTo({
-      url: '/pages/vote/vote'
-    })
-  },
-
-  // 显示关于我们
-  showAbout() {
+  // 联系我们
+  contactUs() {
     wx.showModal({
-      title: '关于我们',
-      content: '社会实践投票小程序致力于为学生提供丰富多彩的社会实践体验，通过民主投票的方式让学生参与活动选择，并提供完整的活动记录和证书管理功能。\n\n版本：v1.0.0',
+      title: '联系我们',
+      content: '电话：010-62846510\n手机：13681397661',
       showCancel: false,
-      confirmText: '知道了'
+      confirmText: '我知道了'
     })
   },
 
-  // 联系客服
-  contactService() {
+  // 积分说明
+  showPointsInfo() {
     wx.showModal({
-      title: '联系客服',
-      content: '客服电话：400-123-4567\n工作时间：周一至周五 9:00-18:00\n\n或者点击右上角菜单中的"联系客服"按钮',
+      title: '积分说明',
+      content: '1. 上传项目并通过审核可获得积分\n2. 积分可用于兑换资料\n3. 不同资料需要不同积分数',
       showCancel: false,
-      confirmText: '知道了'
+      confirmText: '我知道了'
     })
-  },
-
-  // 退出登录
-  async logout() {
-    const confirm = await util.showConfirm('确定要退出登录吗？', '退出登录')
-    
-    if (confirm) {
-      // 清除本地数据
-      wx.clearStorageSync()
-      
-      // 重置全局数据
-      const app = getApp()
-      app.globalData.userInfo = null
-      app.globalData.isAuthorized = false
-      app.globalData.openid = null
-
-      util.showToast('已退出登录', 'success')
-
-      // 跳转到授权页面
-      setTimeout(() => {
-        wx.redirectTo({
-          url: '/pages/authorization/authorization'
-        })
-      }, 1500)
-    }
-  },
-
-  // 分享配置
-  onShareAppMessage() {
-    return {
-      title: '社会实践投票 - 精彩活动等你来',
-      path: '/pages/index/index'
-    }
   }
 })
-

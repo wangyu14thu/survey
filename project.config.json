@@ -1,8 +1,7 @@
 {
-  "description": "社会实践投票小程序",
+  "description": "PBL营教师端小程序",
   "packOptions": {
-    "ignore": [],
-    "include": []
+    "ignore": []
   },
   "setting": {
     "bundle": false,
@@ -32,27 +31,13 @@
     "packNpmRelationList": [],
     "minifyWXSS": true,
     "showES6CompileOption": false,
-    "minifyWXML": true,
-    "babelSetting": {
-      "ignore": [],
-      "disablePlugins": [],
-      "outputPath": ""
-    },
-    "compileWorklet": false,
-    "localPlugins": false,
-    "disableUseStrict": false,
-    "useCompilerPlugins": false,
-    "condition": false,
-    "swc": false,
-    "disableSWC": true
+    "minifyWXML": true
   },
   "compileType": "miniprogram",
   "libVersion": "2.19.4",
   "appid": "wx2d26ef0658587b77",
-  "projectname": "social-practice-survey",
+  "projectname": "pbl-teacher",
   "cloudfunctionRoot": "cloudfunctions/",
-  "condition": {},
-  "simulatorPluginLibVersion": {},
-  "editorSetting": {},
-  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/"
+  "condition": {}
 }
+

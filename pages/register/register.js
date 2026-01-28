@@ -1,14 +1,13 @@
 // pages/register/register.js
-const util = require('../../utils/util.js')
+const app = getApp()
 
 Page({
   data: {
     formData: {
-      role: '', // 身份：student 或 teacher
       nickname: '',
       grade: '',
+      subject: '',
       region: [],
-      school: '', // 学校
       phone: ''
     },
     gradeList: [
@@ -16,49 +15,30 @@ Page({
       '初一', '初二', '初三',
       '高一', '高二', '高三'
     ],
-    schoolList: [
-      '北京翠微小学',
-      '其他'
-    ],
     gradeIndex: -1,
-    schoolIndex: -1,
+    subjectList: [
+      '语文', '数学', '英语', '物理', '化学', '生物',
+      '历史', '地理', '政治', '音乐', '体育', '美术',
+      '信息技术', '通用技术', '科学', '综合实践', '其他'
+    ],
+    subjectIndex: -1,
     canSubmit: false
   },
 
   onLoad(options) {
-    // 检查是否已授权
-    if (!util.checkAuthorization()) {
-      wx.redirectTo({
-        url: '/pages/authorization/authorization'
-      })
-      return
-    }
-
-    // 检查是否已注册（只检查本地存储）
-    const userInfo = util.checkRegistration()
-    if (userInfo) {
+    // 检查是否已注册
+    const teacherInfo = wx.getStorageSync('teacherInfo')
+    if (teacherInfo) {
       wx.switchTab({
         url: '/pages/index/index'
       })
     }
   },
 
-  // 选择身份
-  selectRole(e) {
-    const role = e.currentTarget.dataset.role
+  // 昵称输入
+  onNicknameInput(e) {
     this.setData({
-      'formData.role': role
-    }, () => {
-      this.checkCanSubmit()
-    })
-  },
-
-  // 输入框变化
-  onInputChange(e) {
-    const field = e.currentTarget.dataset.field
-    const value = e.detail.value
-    this.setData({
-      [`formData.${field}`]: value
+      'formData.nickname': e.detail.value
     }, () => {
       this.checkCanSubmit()
     })
@@ -75,6 +55,17 @@ Page({
     })
   },
 
+  // 学科选择
+  onSubjectChange(e) {
+    const index = e.detail.value
+    this.setData({
+      subjectIndex: index,
+      'formData.subject': this.data.subjectList[index]
+    }, () => {
+      this.checkCanSubmit()
+    })
+  },
+
   // 地区选择
   onRegionChange(e) {
     this.setData({
@@ -84,56 +75,23 @@ Page({
     })
   },
 
-  // 学校选择
-  onSchoolChange(e) {
-    const index = e.detail.value
+  // 手机号输入
+  onPhoneInput(e) {
     this.setData({
-      schoolIndex: index,
-      'formData.school': this.data.schoolList[index]
+      'formData.phone': e.detail.value
     }, () => {
       this.checkCanSubmit()
     })
   },
 
-  // 微信授权获取手机号
-  getPhoneNumber(e) {
-    if (e.detail.errMsg === 'getPhoneNumber:ok') {
-      // 这里需要调用云函数解密手机号
-      util.showLoading('获取中...')
-      
-      wx.cloud.callFunction({
-        name: 'getPhoneNumber',
-        data: {
-          cloudID: e.detail.cloudID
-        }
-      }).then(res => {
-        util.hideLoading()
-        if (res.result && res.result.phone) {
-          this.setData({
-            'formData.phone': res.result.phone
-          }, () => {
-            this.checkCanSubmit()
-          })
-          util.showToast('获取成功', 'success')
-        }
-      }).catch(err => {
-        util.hideLoading()
-        console.error('获取手机号失败', err)
-        util.showToast('获取失败，请手动输入')
-      })
-    }
-  },
-
   // 检查是否可以提交
   checkCanSubmit() {
-    const { role, nickname, grade, region, school, phone } = this.data.formData
-    const canSubmit = role !== '' &&
-                     nickname.trim() !== '' &&
+    const { nickname, grade, subject, region, phone } = this.data.formData
+    const canSubmit = nickname.trim() !== '' &&
                      grade !== '' &&
+                     subject !== '' &&
                      region.length > 0 &&
-                     school !== '' &&
                      phone.length === 11
-
     this.setData({ canSubmit })
   },
 
@@ -143,61 +101,59 @@ Page({
       return
     }
 
-    // 验证手机号格式
+    // 验证手机号
     const phoneReg = /^1[3-9]\d{9}$/
     if (!phoneReg.test(this.data.formData.phone)) {
-      util.showToast('请输入正确的手机号')
+      wx.showToast({
+        title: '请输入正确的手机号',
+        icon: 'none'
+      })
       return
     }
 
-    util.showLoading('注册中...')
+    wx.showLoading({
+      title: '注册中...',
+      mask: true
+    })
 
     try {
-      // 获取OpenID
-      const app = getApp()
-      let openid = app.globalData.openid
-      
-      if (!openid) {
-        openid = await util.getOpenId()
-        app.globalData.openid = openid
-      }
+      // 获取 openid
+      const loginRes = await wx.cloud.callFunction({
+        name: 'login'
+      })
+      const openid = loginRes.result.openid
 
-      if (!openid) {
-        throw new Error('获取用户标识失败')
-      }
-
-      // 注册用户
+      // 调用注册云函数
       const res = await wx.cloud.callFunction({
-        name: 'user',
+        name: 'teacher',
         data: {
           action: 'register',
           openid,
           ...this.data.formData,
+          points: 0, // 初始积分
           registerTime: new Date().getTime()
         }
       })
 
+      wx.hideLoading()
+
       if (res.result.success) {
-        // 保存用户信息到本地（使用云函数返回的数据或本地数据）
-        const userInfo = res.result.userInfo || {
+        const teacherInfo = {
           ...this.data.formData,
           openid,
+          points: 0,
           region: this.data.formData.region.join(' ')
         }
-        
-        wx.setStorageSync('userInfo', userInfo)
-        app.globalData.userInfo = userInfo
 
-        util.hideLoading()
-        
-        // 根据返回消息显示不同提示
-        if (res.result.message === '欢迎回来') {
-          util.showToast('欢迎回来', 'success')
-        } else {
-          util.showToast('注册成功', 'success')
-        }
+        wx.setStorageSync('teacherInfo', teacherInfo)
+        app.globalData.teacherInfo = teacherInfo
+        app.globalData.openid = openid
 
-        // 延迟跳转到首页
+        wx.showToast({
+          title: '注册成功',
+          icon: 'success'
+        })
+
         setTimeout(() => {
           wx.switchTab({
             url: '/pages/index/index'
@@ -206,22 +162,13 @@ Page({
       } else {
         throw new Error(res.result.message || '注册失败')
       }
-
     } catch (err) {
-      util.hideLoading()
+      wx.hideLoading()
       console.error('注册失败', err)
-      
-      // 判断具体的错误类型
-      if (err.message.includes('姓名或手机号不匹配')) {
-        wx.showModal({
-          title: '身份验证失败',
-          content: '该微信账号已注册过，但您填写的姓名或手机号与注册信息不匹配。\n\n如果忘记注册信息，请联系管理员。',
-          showCancel: false,
-          confirmText: '我知道了'
-        })
-      } else {
-        util.showToast('注册失败，请重试')
-      }
+      wx.showToast({
+        title: '注册失败，请重试',
+        icon: 'none'
+      })
     }
   }
 })

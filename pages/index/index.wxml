@@ -1,79 +1,51 @@
-<!--首页-->
+<!--pages/index/index.wxml-->
 <view class="index-container">
-  <!-- Banner轮播图 -->
-  <swiper class="banner-swiper" indicator-dots indicator-color="rgba(255,255,255,0.5)" indicator-active-color="#ffffff" autoplay circular>
-    <swiper-item wx:for="{{banners}}" wx:key="id">
-      <image class="banner-image" src="{{item.image}}" mode="aspectFill" bindtap="onBannerTap" data-url="{{item.url}}"></image>
-    </swiper-item>
-  </swiper>
-
-  <!-- 投票活动板块 -->
-  <view class="section-card vote-section">
-    <view class="section-header">
-      <view class="header-left">
-        <text class="section-icon">🗳️</text>
-        <view class="header-text">
-          <text class="section-title">主题投票活动</text>
-          <text class="section-subtitle">选出你最喜欢的实践主题</text>
-        </view>
+  <!-- Header -->
+  <view class="header">
+    <view class="header-content">
+      <view class="greeting">
+        <text class="greeting-text">你好，{{teacherInfo.nickname || '教师'}}👋</text>
+        <text class="greeting-subtitle">欢迎来到PBL营</text>
       </view>
-      <view class="header-right" bindtap="navigateToResult" wx:if="{{voteEnded}}">
-        <text class="link-text">查看结果</text>
-        <text class="arrow">›</text>
+      <view class="points-badge">
+        <text class="points-icon">💎</text>
+        <text class="points-text">{{teacherInfo.points || 0}}积分</text>
       </view>
-    </view>
-
-    <!-- 投票状态 -->
-    <view class="vote-status">
-      <view class="status-item">
-        <text class="status-label">活动状态</text>
-        <text class="status-value {{voteEnded ? 'ended' : 'ongoing'}}">
-          {{voteEnded ? '已结束' : '进行中'}}
-        </text>
-      </view>
-      <view class="status-item">
-        <text class="status-label">截止时间</text>
-        <text class="status-value">2026-03-01</text>
-      </view>
-      <view class="status-item">
-        <text class="status-label">参与人数</text>
-        <text class="status-value highlight">{{totalVotes}}人</text>
-      </view>
-    </view>
-
-    <!-- 投票按钮或已投票提示 -->
-    <view class="vote-action" wx:if="{{!voteEnded}}">
-      <button class="btn-vote {{hasVoted ? 'btn-disabled' : 'btn-primary'}}" bindtap="navigateToVote" disabled="{{hasVoted}}">
-        {{hasVoted ? '✓ 已投票' : '立即投票'}}
-      </button>
     </view>
   </view>
 
-  <!-- 社会实践活动板块 -->
-  <view class="section-card entry-card" bindtap="navigateToThemesList">
-    <view class="entry-icon-large">
-      <text class="entry-emoji">🎯</text>
+  <!-- Modules Grid -->
+  <view class="modules-section">
+    <view class="section-title">
+      <text class="title-text">功能模块</text>
+      <text class="title-line"></text>
     </view>
-    <view class="entry-content">
-      <text class="entry-title">社会实践活动</text>
-      <text class="entry-desc">六大实践主题，丰富课外生活</text>
-    </view>
-    <view class="entry-arrow-wrapper">
-      <text class="entry-arrow">›</text>
+    <view class="modules-grid">
+      <view 
+        class="module-card" 
+        wx:for="{{modules}}" 
+        wx:key="id"
+        bindtap="navigateToModule"
+        data-url="{{item.url}}"
+        style="background: linear-gradient(135deg, {{item.color}} 0%, {{item.color}}cc 100%);"
+      >
+        <view class="module-icon">{{item.icon}}</view>
+        <view class="module-name">{{item.name}}</view>
+        <view class="module-desc">{{item.desc}}</view>
+        <view class="module-arrow">→</view>
+      </view>
     </view>
   </view>
 
-  <!-- 精品课程板块 -->
-  <view class="section-card entry-card" bindtap="navigateToCourses">
-    <view class="entry-icon-large">
-      <text class="entry-emoji">📚</text>
-    </view>
-    <view class="entry-content">
-      <text class="entry-title">精品课程</text>
-      <text class="entry-desc">专业职业体验，助力成长</text>
-    </view>
-    <view class="entry-arrow-wrapper">
-      <text class="entry-arrow">›</text>
+  <!-- Tips -->
+  <view class="tips-section">
+    <view class="tip-card">
+      <text class="tip-icon">💡</text>
+      <view class="tip-content">
+        <text class="tip-title">积分说明</text>
+        <text class="tip-text">上传优质项目可获得积分，积分可兑换资料</text>
+      </view>
     </view>
   </view>
 </view>
+

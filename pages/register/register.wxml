@@ -1,35 +1,15 @@
-<!--用户注册页面-->
+<!--pages/register/register.wxml-->
 <view class="register-container">
+  <!-- Header -->
   <view class="register-header">
-    <image class="header-bg" src="/images/register-bg.png" mode="aspectFill"></image>
-    <view class="header-content">
-      <text class="welcome-text">欢迎加入</text>
-      <text class="title-text">社会实践之旅</text>
-    </view>
+    <text class="header-icon">👨‍🏫</text>
+    <text class="header-title">教师注册</text>
+    <text class="header-subtitle">欢迎加入PBL营</text>
   </view>
 
+  <!-- Form -->
   <view class="register-form">
-    <view class="form-item">
-      <view class="label">
-        <text class="label-text">身份</text>
-        <text class="required">*</text>
-      </view>
-      <view class="role-selector">
-        <view class="role-option {{formData.role === 'student' ? 'role-active' : ''}}" 
-              bindtap="selectRole" 
-              data-role="student">
-          <text class="role-icon">🎓</text>
-          <text class="role-name">学生</text>
-        </view>
-        <view class="role-option {{formData.role === 'teacher' ? 'role-active' : ''}}" 
-              bindtap="selectRole" 
-              data-role="teacher">
-          <text class="role-icon">👨‍🏫</text>
-          <text class="role-name">老师</text>
-        </view>
-      </view>
-    </view>
-
+    <!-- 昵称 -->
     <view class="form-item">
       <view class="label">
         <text class="label-text">昵称</text>
@@ -37,14 +17,14 @@
       </view>
       <input 
         class="input" 
-        placeholder="请输入您的昵称" 
+        type="text" 
+        placeholder="请输入您的昵称"
         value="{{formData.nickname}}"
-        bindinput="onInputChange"
-        data-field="nickname"
-        maxlength="20"
+        bindinput="onNicknameInput"
       />
     </view>
 
+    <!-- 年级 -->
     <view class="form-item">
       <view class="label">
         <text class="label-text">年级</text>
@@ -53,15 +33,36 @@
       <picker 
         mode="selector" 
         range="{{gradeList}}" 
-        value="{{gradeIndex}}"
-        bindchange="onGradeChange">
+        value="{{gradeIndex}}" 
+        bindchange="onGradeChange"
+      >
         <view class="picker {{gradeIndex === -1 ? 'placeholder' : ''}}">
-          {{gradeIndex === -1 ? '请选择年级' : gradeList[gradeIndex]}}
+          {{gradeIndex === -1 ? '请选择任教年级' : gradeList[gradeIndex]}}
           <text class="arrow">›</text>
         </view>
       </picker>
     </view>
 
+    <!-- 学科 -->
+    <view class="form-item">
+      <view class="label">
+        <text class="label-text">学科</text>
+        <text class="required">*</text>
+      </view>
+      <picker 
+        mode="selector" 
+        range="{{subjectList}}" 
+        value="{{subjectIndex}}" 
+        bindchange="onSubjectChange"
+      >
+        <view class="picker {{subjectIndex === -1 ? 'placeholder' : ''}}">
+          {{subjectIndex === -1 ? '请选择任教学科' : subjectList[subjectIndex]}}
+          <text class="arrow">›</text>
+        </view>
+      </picker>
+    </view>
+
+    <!-- 地区 -->
     <view class="form-item">
       <view class="label">
         <text class="label-text">地区</text>
@@ -69,67 +70,45 @@
       </view>
       <picker 
         mode="region" 
-        value="{{formData.region}}"
-        bindchange="onRegionChange">
+        value="{{formData.region}}" 
+        bindchange="onRegionChange"
+      >
         <view class="picker {{formData.region.length === 0 ? 'placeholder' : ''}}">
-          {{formData.region.length === 0 ? '请选择地区' : formData.region.join(' ')}}
+          {{formData.region.length === 0 ? '请选择所在地区' : formData.region.join(' ')}}
           <text class="arrow">›</text>
         </view>
       </picker>
     </view>
 
-    <view class="form-item">
-      <view class="label">
-        <text class="label-text">学校</text>
-        <text class="required">*</text>
-      </view>
-      <picker 
-        mode="selector" 
-        range="{{schoolList}}" 
-        value="{{schoolIndex}}"
-        bindchange="onSchoolChange">
-        <view class="picker {{schoolIndex === -1 ? 'placeholder' : ''}}">
-          {{schoolIndex === -1 ? '请选择学校' : schoolList[schoolIndex]}}
-          <text class="arrow">›</text>
-        </view>
-      </picker>
-    </view>
-
+    <!-- 手机号 -->
     <view class="form-item">
       <view class="label">
         <text class="label-text">手机号</text>
         <text class="required">*</text>
       </view>
-      <view class="phone-input">
-        <input 
-          class="input" 
-          type="number" 
-          placeholder="请输入手机号" 
-          value="{{formData.phone}}"
-          bindinput="onInputChange"
-          data-field="phone"
-          maxlength="11"
-        />
-        <button 
-          class="btn-wechat-auth" 
-          wx:if="{{!formData.phone}}"
-          open-type="getPhoneNumber"
-          bindgetphonenumber="getPhoneNumber">
-          微信授权
-        </button>
-      </view>
+      <input 
+        class="input" 
+        type="number" 
+        maxlength="11" 
+        placeholder="请输入手机号"
+        value="{{formData.phone}}"
+        bindinput="onPhoneInput"
+      />
     </view>
 
+    <!-- 提示 -->
     <view class="form-tip">
       <text class="tip-icon">ℹ️</text>
-      <text class="tip-text">请确保信息准确，注册后部分信息不可修改</text>
+      <text class="tip-text">请确保信息准确，用于后续身份验证</text>
     </view>
 
+    <!-- 提交按钮 -->
     <button 
-      class="btn-submit {{canSubmit ? 'btn-primary' : 'btn-disabled'}}" 
+      class="btn-submit {{canSubmit ? '' : 'btn-disabled'}}" 
       bindtap="submitRegister"
-      disabled="{{!canSubmit}}">
-      完成注册
+      disabled="{{!canSubmit}}"
+    >
+      立即注册
     </button>
   </view>
 </view>

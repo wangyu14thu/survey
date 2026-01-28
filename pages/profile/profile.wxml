@@ -1,106 +1,67 @@
-<!--个人中心页面-->
+<!--pages/profile/profile.wxml-->
 <view class="profile-container">
-  <!-- 用户信息卡片 -->
-  <view class="user-card">
-    <view class="user-avatar">
-      <text class="avatar-icon">{{userInfo.role === 'teacher' ? '👨‍🏫' : '🎓'}}</text>
-    </view>
-    <view class="user-info">
-      <view class="user-name-row">
-        <text class="user-name">{{userInfo.nickname || '未登录'}}</text>
-        <view class="role-badge {{userInfo.role === 'teacher' ? 'role-teacher' : 'role-student'}}">
-          {{userInfo.role === 'teacher' ? '老师' : '学生'}}
-        </view>
+  <!-- 头部信息卡片 -->
+  <view class="profile-header">
+    <view class="header-bg"></view>
+    <view class="user-card">
+      <view class="user-avatar">
+        <text class="avatar-icon">👨‍🏫</text>
       </view>
-      <text class="user-school">{{userInfo.grade || ''}} · {{userInfo.region || ''}}</text>
+      <view class="user-info">
+        <text class="user-name">{{teacherInfo.nickname || '未登录'}}</text>
+        <text class="user-detail">{{teacherInfo.subject}} · {{teacherInfo.grade}}</text>
+        <text class="user-region" wx:if="{{teacherInfo.region}}">{{teacherInfo.region}}</text>
+      </view>
+      <button class="btn-edit" bindtap="editProfile">编辑</button>
     </view>
   </view>
 
-  <!-- 统计信息 -->
+  <!-- 积分卡片 -->
+  <view class="points-card">
+    <view class="points-left">
+      <text class="points-icon">💎</text>
+      <view class="points-info">
+        <text class="points-value">{{teacherInfo.points || 0}}</text>
+        <text class="points-label">我的积分</text>
+      </view>
+    </view>
+    <button class="btn-points-info" bindtap="showPointsInfo">
+      <text>积分说明</text>
+      <text class="arrow">›</text>
+    </button>
+  </view>
+
+  <!-- 统计数据 -->
   <view class="stats-section">
-    <view class="stat-item" bindtap="navigateToCertificate">
-      <text class="stat-number">{{stats.certificates}}</text>
-      <text class="stat-label">证书</text>
+    <view class="stat-item">
+      <text class="stat-number">{{stats.uploads}}</text>
+      <text class="stat-label">上传作品</text>
     </view>
-    <view class="stat-item" bindtap="navigateToOrder">
-      <text class="stat-number">{{stats.orders}}</text>
-      <text class="stat-label">订单</text>
-    </view>
-    <view class="stat-item" bindtap="navigateToRecords">
-      <text class="stat-number">{{stats.records}}</text>
-      <text class="stat-label">记录</text>
+    <view class="stat-divider"></view>
+    <view class="stat-item">
+      <text class="stat-number">{{stats.purchased}}</text>
+      <text class="stat-label">已购资料</text>
     </view>
   </view>
 
   <!-- 功能菜单 -->
   <view class="menu-section">
     <view class="menu-group">
-      <view class="menu-item" bindtap="navigateToOrder">
+      <view class="menu-item" bindtap="uploadWork">
         <view class="menu-left">
-          <text class="menu-icon">📝</text>
-          <text class="menu-title">我的订单</text>
+          <text class="menu-icon">📤</text>
+          <text class="menu-title">上传我的作品</text>
         </view>
         <text class="menu-arrow">›</text>
       </view>
-      
-      <view class="menu-item" bindtap="navigateToCertificate">
-        <view class="menu-left">
-          <text class="menu-icon">🏆</text>
-          <text class="menu-title">我的证书</text>
-        </view>
-        <text class="menu-arrow">›</text>
-      </view>
-
-      <view class="menu-item" bindtap="navigateToRecords">
-        <view class="menu-left">
-          <text class="menu-icon">📝</text>
-          <text class="menu-title">成长记录</text>
-        </view>
-        <text class="menu-arrow">›</text>
-      </view>
-    </view>
-
-    <view class="menu-group">
-      <view class="menu-item" bindtap="navigateToCourses">
-        <view class="menu-left">
-          <text class="menu-icon">📚</text>
-          <text class="menu-title">精品项目课</text>
-          <text class="menu-badge">New</text>
-        </view>
-        <text class="menu-arrow">›</text>
-      </view>
-
-      <view class="menu-item" bindtap="navigateToVote">
-        <view class="menu-left">
-          <text class="menu-icon">🗳️</text>
-          <text class="menu-title">投票活动</text>
-        </view>
-        <text class="menu-arrow">›</text>
-      </view>
-    </view>
-
-    <view class="menu-group">
-      <view class="menu-item" bindtap="showAbout">
-        <view class="menu-left">
-          <text class="menu-icon">ℹ️</text>
-          <text class="menu-title">关于我们</text>
-        </view>
-        <text class="menu-arrow">›</text>
-      </view>
-
-      <view class="menu-item" bindtap="contactService">
+      <view class="menu-item" bindtap="contactUs">
         <view class="menu-left">
           <text class="menu-icon">📞</text>
-          <text class="menu-title">联系客服</text>
+          <text class="menu-title">联系我们</text>
         </view>
         <text class="menu-arrow">›</text>
       </view>
     </view>
-  </view>
-
-  <!-- 退出登录 -->
-  <view class="logout-section" wx:if="{{userInfo}}">
-    <button class="btn-logout" bindtap="logout">退出登录</button>
   </view>
 </view>
 

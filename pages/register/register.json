@@ -1,6 +1,5 @@
 {
-  "navigationBarTitleText": "用户注册",
-  "navigationBarBackgroundColor": "#4A90E2",
-  "navigationBarTextStyle": "white"
+  "navigationBarTitleText": "教师注册",
+  "usingComponents": {}
 }
 

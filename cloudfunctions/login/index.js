@@ -1,4 +1,4 @@
-// 登录云函数 - 获取用户OpenID
+// cloudfunctions/login/index.js
 const cloud = require('wx-server-sdk')
 
 cloud.init({
