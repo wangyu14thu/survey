@@ -8,7 +8,7 @@ Page({
     userInfo: null,
     activityInfo: null,
     stages: [
-      { id: 1, name: '目的地投票', icon: '📍', status: 'locked', url: '/pages/vote/vote' },
+      { id: 1, name: '目的地投票', icon: '📍', status: 'active', url: '/pages/vote/vote' },
       { id: 2, name: '任务预习', icon: '📚', status: 'locked', url: '/pages/preview/preview' },
       { id: 3, name: '研学过程', icon: '🎒', status: 'locked', url: '/pages/process/process' },
       { id: 4, name: '活动回顾', icon: '📝', status: 'locked', url: '/pages/review/review' }

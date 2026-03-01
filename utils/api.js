@@ -91,12 +91,110 @@ const getMockData = (name, data) => {
               image: 'https://mmbiz.qpic.cn/mmbiz_jpg/demo3.jpg',
               activities: '体验超验之躯、敦煌宇宙、光与色、敦煌花灯、飞天星座、时间机器、出神入画等活动',
               votes: 0
+            },
+            {
+              id: 4,
+              name: '北京陶瓷艺术馆',
+              image: 'https://mmbiz.qpic.cn/mmbiz_jpg/demo4.jpg',
+              activities: '体验指尖陶瓷制作、泥塑成型、釉下绘画、拉坯体验和扎染技艺等活动',
+              votes: 0
+            },
+            {
+              id: 5,
+              name: '国家中影数字制作基地',
+              image: 'https://mmbiz.qpic.cn/mmbiz_jpg/demo5.jpg',
+              activities: '体验拟音车间、绿幕摄影棚、特效化妆、光影魔术等活动',
+              votes: 0
+            },
+            {
+              id: 6,
+              name: '北京国际青年营',
+              image: 'https://mmbiz.qpic.cn/mmbiz_jpg/demo6.jpg',
+              activities: '体验安营扎寨、生命之源、荒野定位、急救互助、埋锅造饭等活动',
+              votes: 0
             }
           ],
           maxSelect: 2,
           deadline: '2026-03-15',
           hasVoted: false,
           showResult: false
+        }
+      }
+    },
+    'preview': {
+      'getTasks': {
+        success: true,
+        data: {
+          identity: '野外生存小专家',
+          challenge: '当我们去野外游玩时，如果一不小心与朋友或家人走散，一时找不到回家的路，我们该如何在野外生存呢？',
+          skills: '我们即将体验安营扎寨、生命之源、荒野定位、急救互助、埋锅造饭等项目，帮助你完成挑战！',
+          questions: [
+            {
+              id: 1,
+              question: '你解锁的新身份是（   ）',
+              options: [
+                { label: 'A.环保志愿者', value: 'A' },
+                { label: 'B.野外生存小专家', value: 'B' }
+              ],
+              answer: 'B'
+            },
+            {
+              id: 2,
+              question: '你面临的挑战是（   ）',
+              options: [
+                { label: 'A.如何在野外生存？', value: 'A' },
+                { label: 'B.如何进行垃圾分类？', value: 'B' }
+              ],
+              answer: 'A'
+            }
+          ]
+        }
+      }
+    },
+    'process': {
+      'getList': {
+        success: true,
+        data: {
+          list: [
+            {
+              id: 1,
+              time: '2026-03-10 09:30',
+              title: '出发啦！',
+              content: '同学们早上8点在学校集合，大家都很兴奋！',
+              images: [],
+              location: '学校门口'
+            },
+            {
+              id: 2,
+              time: '2026-03-10 10:30',
+              title: '到达营地',
+              content: '经过1小时的车程，我们顺利到达北京国际青年营，教练向我们介绍了今天的活动安排。',
+              images: [],
+              location: '北京国际青年营'
+            },
+            {
+              id: 3,
+              time: '2026-03-10 11:00',
+              title: '安营扎寨',
+              content: '在教练的指导下，同学们分组搭建帐篷，大家齐心协力，很快就搭好了！',
+              images: [],
+              location: '营地'
+            }
+          ],
+          hasMore: false
+        }
+      }
+    },
+    'review': {
+      'getArticle': {
+        success: true,
+        data: {
+          title: '2026春季研学活动圆满结束',
+          date: '2026-03-15',
+          cover: 'https://mmbiz.qpic.cn/mmbiz_jpg/review_cover.jpg',
+          views: 1286,
+          content: '<p>经过一天精彩的研学活动，同学们收获满满...</p><p>在野外生存训练中，大家学会了搭建帐篷、寻找水源、野外定位等技能...</p>',
+          images: []
         }
       }
     },
