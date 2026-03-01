@@ -2,9 +2,10 @@
 <view class="index-container">
   <!-- 顶部信息 -->
   <view class="header">
-    <view class="school-info">
-      <text class="school-name">{{activityInfo.schoolName || ''}}</text>
-      <text class="grade-name">{{userInfo.grade || ''}}</text>
+    <view class="school-grade">
+      <text class="school-text">{{activityInfo.schoolName || 'XX小学'}}</text>
+      <text class="divider">·</text>
+      <text class="grade-text">{{userInfo.grade || '五年级'}}</text>
     </view>
     <text class="activity-name">{{activityInfo.activityName || '研学活动'}}</text>
   </view>
@@ -12,40 +13,93 @@
   <!-- 研学之旅 -->
   <view class="journey-section">
     <view class="journey-title">
-      <text class="title-icon">🗺️</text>
-      <text class="title-text">我的研学之旅</text>
+      <image class="title-bg" src="/images/journey-title-bg.png" mode="widthFix" />
+      <view class="title-content">
+        <text class="title-icon">🎒</text>
+        <text class="title-text">我的研学之旅</text>
+      </view>
     </view>
 
-    <!-- 地图路线 -->
+    <!-- 地图路线 - 卡通风格 -->
     <view class="journey-map">
-      <view 
-        class="stage-item {{stage.status}}" 
-        wx:for="{{stages}}" 
-        wx:key="id"
-        bindtap="navigateToStage"
-        data-url="{{stage.url}}"
-        data-status="{{stage.status}}"
-      >
-        <!-- 站点标记 -->
-        <view class="stage-marker">
-          <view class="stage-number">{{stage.id}}</view>
-          <view class="stage-icon">{{stage.icon}}</view>
+      <!-- 背景装饰 -->
+      <view class="map-decoration">
+        <text class="cloud cloud-1">☁️</text>
+        <text class="cloud cloud-2">☁️</text>
+        <text class="star star-1">⭐</text>
+        <text class="star star-2">✨</text>
+      </view>
+
+      <!-- 路线站点 -->
+      <view class="stages-container">
+        <view 
+          class="stage-wrapper {{stage.status}}" 
+          wx:for="{{stages}}" 
+          wx:key="id"
+        >
+          <!-- 路线连接线（虚线动画）-->
+          <view class="road-line" wx:if="{{stage.id < 4}}">
+            <view class="road-dot"></view>
+            <view class="road-dot"></view>
+            <view class="road-dot"></view>
+            <view class="road-dot"></view>
+            <view class="road-dot"></view>
+          </view>
+
+          <!-- 站点卡片 -->
+          <view 
+            class="stage-card"
+            bindtap="navigateToStage"
+            data-url="{{stage.url}}"
+            data-status="{{stage.status}}"
+          >
+            <!-- 站点图标容器 -->
+            <view class="station-icon-wrapper">
+              <!-- 光环效果 -->
+              <view class="station-glow" wx:if="{{stage.status === 'active'}}"></view>
+              
+              <!-- 站点图标 -->
+              <view class="station-icon {{stage.status}}">
+                <text class="icon-emoji">{{stage.icon}}</text>
+                
+                <!-- 站点编号 -->
+                <view class="station-number">
+                  <text>{{stage.id}}</text>
+                </view>
+                
+                <!-- 完成徽章 -->
+                <view class="complete-badge" wx:if="{{stage.status === 'completed'}}">
+                  <text>✓</text>
+                </view>
+                
+                <!-- 锁定图标 -->
+                <view class="lock-icon" wx:if="{{stage.status === 'locked'}}">
+                  <text>🔒</text>
+                </view>
+              </view>
+            </view>
+
+            <!-- 站点信息 -->
+            <view class="station-info">
+              <view class="station-badge">
+                <text>第{{['一','二','三','四'][stage.id-1]}}站</text>
+              </view>
+              <text class="station-name">{{stage.name}}</text>
+              
+              <!-- 状态标签 -->
+              <view class="status-tag {{stage.status}}">
+                <text wx:if="{{stage.status === 'active'}}">🎯 进行中</text>
+                <text wx:if="{{stage.status === 'completed'}}">✅ 已完成</text>
+                <text wx:if="{{stage.status === 'locked'}}">🔒 未解锁</text>
+              </view>
+            </view>
+
+            <!-- 点击提示 -->
+            <view class="tap-hint" wx:if="{{stage.status !== 'locked'}}">
+              <text>点击进入 →</text>
+            </view>
+          </view>
         </view>
-
-        <!-- 站点名称 -->
-        <view class="stage-name">
-          <text>第{{['一','二','三','四'][stage.id-1]}}站</text>
-          <text class="stage-title">{{stage.name}}</text>
-        </view>
-
-        <!-- 连接线 -->
-        <view class="stage-line" wx:if="{{stage.id < 4}}"></view>
-
-        <!-- 锁定状态 -->
-        <view class="stage-lock" wx:if="{{stage.status === 'locked'}}">🔒</view>
-        
-        <!-- 完成状态 -->
-        <view class="stage-check" wx:if="{{stage.status === 'completed'}}">✓</view>
       </view>
     </view>
   </view>
@@ -53,8 +107,13 @@
   <!-- 温馨提示 -->
   <view class="tips-section">
     <view class="tip-card">
-      <text class="tip-icon">💡</text>
-      <text class="tip-text">按照站点顺序完成研学任务，解锁下一站</text>
+      <view class="tip-icon-wrapper">
+        <text class="tip-icon">💡</text>
+      </view>
+      <view class="tip-content">
+        <text class="tip-title">研学小贴士</text>
+        <text class="tip-text">按照站点顺序完成任务，逐步解锁精彩旅程</text>
+      </view>
     </view>
   </view>
 </view>
