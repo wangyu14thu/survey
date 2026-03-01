@@ -1,0 +1,60 @@
+<!--pages/review/review.wxml-->
+<view class="review-container">
+  <view wx:if="{{!loading && article}}">
+    <!-- 文章头部 -->
+    <view class="article-header">
+      <text class="article-title">{{article.title}}</text>
+      <view class="article-meta">
+        <text class="meta-item">📅 {{article.date}}</text>
+        <text class="meta-item">👁️ {{article.views || 0}} 阅读</text>
+      </view>
+    </view>
+
+    <!-- 封面图 -->
+    <view class="article-cover" wx:if="{{article.cover}}">
+      <image class="cover-image" src="{{article.cover}}" mode="aspectFill" />
+    </view>
+
+    <!-- 文章内容 -->
+    <view class="article-content">
+      <rich-text nodes="{{article.content}}" />
+    </view>
+
+    <!-- 图片集 -->
+    <view class="article-images" wx:if="{{article.images && article.images.length > 0}}">
+      <view class="images-title">精彩瞬间</view>
+      <view class="images-grid">
+        <image 
+          class="article-image" 
+          wx:for="{{article.images}}" 
+          wx:key="*this"
+          src="{{item}}" 
+          mode="aspectFill"
+          bindtap="previewImage"
+          data-current="{{item}}"
+          data-urls="{{article.images}}"
+        />
+      </view>
+    </view>
+
+    <!-- 底部信息 -->
+    <view class="article-footer">
+      <view class="footer-divider"></view>
+      <text class="footer-text">- END -</text>
+      <text class="footer-tip">感谢参与本次研学活动</text>
+    </view>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="loading-state" wx:if="{{loading}}">
+    <text class="loading-icon">⏳</text>
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{!loading && !article}}">
+    <text class="empty-icon">📝</text>
+    <text class="empty-text">暂无活动回顾</text>
+    <text class="empty-tip">老师稍后会上传精彩内容</text>
+  </view>
+</view>

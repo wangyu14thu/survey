@@ -1,0 +1,68 @@
+<!--pages/album/album.wxml-->
+<view class="album-container">
+  <!-- 顶部筛选 -->
+  <view class="filter-bar">
+    <view class="filter-label">
+      <text class="label-icon">🎓</text>
+      <text class="label-text">年级筛选</text>
+    </view>
+    <picker 
+      class="grade-picker" 
+      mode="selector" 
+      range="{{gradeList}}" 
+      value="{{gradeIndex}}" 
+      bindchange="onGradeChange"
+    >
+      <view class="picker-value">
+        <text>{{gradeList[gradeIndex]}}</text>
+        <text class="picker-arrow">▼</text>
+      </view>
+    </picker>
+  </view>
+
+  <!-- 相册列表 -->
+  <view class="album-list">
+    <view 
+      class="album-card" 
+      wx:for="{{albums}}" 
+      wx:key="id"
+      bindtap="viewAlbum"
+      data-id="{{item.id}}"
+    >
+      <!-- 封面图 -->
+      <view class="album-cover">
+        <image class="cover-image" src="{{item.cover}}" mode="aspectFill" />
+        <view class="photo-count">
+          <text class="count-icon">📷</text>
+          <text class="count-text">{{item.photoCount || 0}}</text>
+        </view>
+      </view>
+
+      <!-- 相册信息 -->
+      <view class="album-info">
+        <text class="album-title">{{item.title}}</text>
+        <view class="album-meta">
+          <text class="meta-item">📅 {{item.date}}</text>
+          <text class="meta-item" wx:if="{{item.grade}}">🎓 {{item.grade}}</text>
+        </view>
+      </view>
+
+      <!-- 进入按钮 -->
+      <view class="enter-btn">
+        <text>进入相册</text>
+        <text class="btn-arrow">→</text>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{albums.length === 0 && !loading}}">
+      <text class="empty-icon">📸</text>
+      <text class="empty-text">暂无相册</text>
+    </view>
+
+    <!-- 加载中 -->
+    <view class="loading-state" wx:if="{{loading}}">
+      <text>加载中...</text>
+    </view>
+  </view>
+</view>

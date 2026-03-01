@@ -1,0 +1,268 @@
+/* pages/moment-detail/moment-detail.wxss */
+.detail-container {
+  min-height: 100vh;
+  background-color: #F7F7F7;
+  padding-bottom: 120rpx;
+}
+
+.moment-section {
+  background-color: white;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.moment-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.user-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+  background-color: #F5F5F5;
+}
+
+.user-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.user-class {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.moment-time {
+  font-size: 24rpx;
+  color: #BBB;
+}
+
+.moment-content {
+  margin-bottom: 30rpx;
+}
+
+.content-text {
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.7;
+  display: block;
+  word-break: break-all;
+}
+
+.moment-images {
+  margin-bottom: 30rpx;
+}
+
+.images-grid {
+  display: grid;
+  gap: 10rpx;
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+
+.images-1 {
+  grid-template-columns: 1fr;
+}
+
+.images-2,
+.images-4 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.images-3,
+.images-5,
+.images-6 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.moment-image {
+  width: 100%;
+  height: 200rpx;
+  background-color: #F5F5F5;
+}
+
+.images-1 .moment-image {
+  height: 400rpx;
+}
+
+.moment-actions {
+  display: flex;
+  gap: 40rpx;
+  padding-top: 30rpx;
+  border-top: 1rpx solid #F0F0F0;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 32rpx;
+  background-color: #F7F7F7;
+  border-radius: 30rpx;
+  transition: all 0.3s;
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.liked {
+  background: linear-gradient(135deg, #FFE5E5 0%, #FFF5E5 100%);
+}
+
+.action-icon {
+  font-size: 32rpx;
+  margin-right: 8rpx;
+}
+
+.action-text {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.comments-section {
+  background-color: white;
+  padding: 30rpx;
+}
+
+.section-title {
+  margin-bottom: 30rpx;
+}
+
+.title-text {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.comments-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-item {
+  display: flex;
+  margin-bottom: 30rpx;
+  padding-bottom: 30rpx;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+
+.comment-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.comment-avatar {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+  background-color: #F5F5F5;
+  flex-shrink: 0;
+}
+
+.comment-content {
+  flex: 1;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.comment-user {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #333;
+  margin-right: 16rpx;
+}
+
+.comment-class {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.comment-text {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+  display: block;
+  margin-bottom: 12rpx;
+  word-break: break-all;
+}
+
+.comment-time {
+  font-size: 22rpx;
+  color: #BBB;
+  display: block;
+}
+
+.empty-comments {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100rpx 0;
+}
+
+.empty-icon {
+  font-size: 100rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-text {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.comment-input-wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  padding: 20rpx 30rpx;
+  box-shadow: 0 -4rpx 12rpx rgba(0, 0, 0, 0.08);
+  display: flex;
+  gap: 20rpx;
+}
+
+.comment-input {
+  flex: 1;
+  height: 72rpx;
+  background-color: #F7F7F7;
+  border-radius: 36rpx;
+  padding: 0 30rpx;
+  font-size: 26rpx;
+}
+
+.btn-send {
+  width: 120rpx;
+  height: 72rpx;
+  background: linear-gradient(135deg, #FF6B6B 0%, #FFB88C 100%);
+  color: white;
+  font-size: 26rpx;
+  font-weight: bold;
+  border-radius: 36rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0;
+}
+
+.btn-disabled {
+  background: #E0E0E0 !important;
+  color: #999 !important;
+}

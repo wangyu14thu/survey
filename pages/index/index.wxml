@@ -1,51 +1,60 @@
 <!--pages/index/index.wxml-->
 <view class="index-container">
-  <!-- Header -->
+  <!-- 顶部信息 -->
   <view class="header">
-    <view class="header-content">
-      <view class="greeting">
-        <text class="greeting-text">你好，{{teacherInfo.nickname || '教师'}}👋</text>
-        <text class="greeting-subtitle">欢迎来到PBL营</text>
-      </view>
-      <view class="points-badge">
-        <text class="points-icon">💎</text>
-        <text class="points-text">{{teacherInfo.points || 0}}积分</text>
-      </view>
+    <view class="school-info">
+      <text class="school-name">{{activityInfo.schoolName || ''}}</text>
+      <text class="grade-name">{{userInfo.grade || ''}}</text>
     </view>
+    <text class="activity-name">{{activityInfo.activityName || '研学活动'}}</text>
   </view>
 
-  <!-- Modules Grid -->
-  <view class="modules-section">
-    <view class="section-title">
-      <text class="title-text">功能模块</text>
-      <text class="title-line"></text>
+  <!-- 研学之旅 -->
+  <view class="journey-section">
+    <view class="journey-title">
+      <text class="title-icon">🗺️</text>
+      <text class="title-text">我的研学之旅</text>
     </view>
-    <view class="modules-grid">
+
+    <!-- 地图路线 -->
+    <view class="journey-map">
       <view 
-        class="module-card" 
-        wx:for="{{modules}}" 
+        class="stage-item {{stage.status}}" 
+        wx:for="{{stages}}" 
         wx:key="id"
-        bindtap="navigateToModule"
-        data-url="{{item.url}}"
-        style="background: linear-gradient(135deg, {{item.color}} 0%, {{item.color}}cc 100%);"
+        bindtap="navigateToStage"
+        data-url="{{stage.url}}"
+        data-status="{{stage.status}}"
       >
-        <view class="module-icon">{{item.icon}}</view>
-        <view class="module-name">{{item.name}}</view>
-        <view class="module-desc">{{item.desc}}</view>
-        <view class="module-arrow">→</view>
+        <!-- 站点标记 -->
+        <view class="stage-marker">
+          <view class="stage-number">{{stage.id}}</view>
+          <view class="stage-icon">{{stage.icon}}</view>
+        </view>
+
+        <!-- 站点名称 -->
+        <view class="stage-name">
+          <text>第{{['一','二','三','四'][stage.id-1]}}站</text>
+          <text class="stage-title">{{stage.name}}</text>
+        </view>
+
+        <!-- 连接线 -->
+        <view class="stage-line" wx:if="{{stage.id < 4}}"></view>
+
+        <!-- 锁定状态 -->
+        <view class="stage-lock" wx:if="{{stage.status === 'locked'}}">🔒</view>
+        
+        <!-- 完成状态 -->
+        <view class="stage-check" wx:if="{{stage.status === 'completed'}}">✓</view>
       </view>
     </view>
   </view>
 
-  <!-- Tips -->
+  <!-- 温馨提示 -->
   <view class="tips-section">
     <view class="tip-card">
       <text class="tip-icon">💡</text>
-      <view class="tip-content">
-        <text class="tip-title">积分说明</text>
-        <text class="tip-text">上传优质项目可获得积分，积分可兑换资料</text>
-      </view>
+      <text class="tip-text">按照站点顺序完成研学任务，解锁下一站</text>
     </view>
   </view>
 </view>
-

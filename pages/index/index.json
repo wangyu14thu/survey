@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "PBL营·首页",
-  "usingComponents": {}
+  "navigationBarTitleText": "研学之旅",
+  "navigationBarBackgroundColor": "#FF6B6B",
+  "navigationBarTextStyle": "white"
 }
-

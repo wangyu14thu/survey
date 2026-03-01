@@ -1,82 +1,110 @@
 // pages/profile/profile.js
-const app = getApp()
+const app = getApp();
+import { getMyActivities, getMyMoments } from '../../utils/api';
+import { showLoading, hideLoading, showToast, showAlert } from '../../utils/util';
 
 Page({
   data: {
-    teacherInfo: null,
+    userInfo: null,
+    activityInfo: null,
+    myActivities: [],
     stats: {
-      uploads: 0,
-      purchased: 0
+      momentCount: 0,
+      likeCount: 0
     }
   },
 
   onShow() {
-    this.loadTeacherInfo()
-    this.loadStats()
+    this.loadUserInfo();
+    this.loadActivityInfo();
+    this.loadMyActivities();
   },
 
-  // 加载教师信息
-  loadTeacherInfo() {
-    const teacherInfo = wx.getStorageSync('teacherInfo')
-    if (teacherInfo) {
+  loadUserInfo() {
+    const userInfo = wx.getStorageSync('userInfo');
+    if (userInfo) {
+      this.setData({ userInfo });
+    }
+  },
+
+  loadActivityInfo() {
+    const school_id = app.globalData.school_id;
+    const act_id = app.globalData.act_id;
+    
+    if (school_id && act_id) {
+      // 这里可以加载当前活动信息
       this.setData({
-        teacherInfo
-      })
-    }
-  },
-
-  // 加载统计数据
-  async loadStats() {
-    try {
-      const res = await wx.cloud.callFunction({
-        name: 'teacher',
-        data: {
-          action: 'getStats',
-          openid: app.globalData.openid
+        activityInfo: {
+          school_id,
+          act_id
         }
-      })
-      if (res.result.success) {
-        this.setData({
-          stats: res.result.stats
-        })
-      }
-    } catch (err) {
-      console.error('加载统计数据失败', err)
+      });
     }
   },
 
-  // 编辑资料
-  editProfile() {
-    wx.showToast({
-      title: '功能开发中',
-      icon: 'none'
-    })
+  async loadMyActivities() {
+    try {
+      const res = await getMyActivities();
+      this.setData({
+        myActivities: res.data.list || []
+      });
+    } catch (err) {
+      console.error('加载活动列表失败:', err);
+    }
   },
 
-  // 上传作品
-  uploadWork() {
+  viewMyMoments() {
     wx.navigateTo({
-      url: '/pages/upload/upload'
-    })
+      url: '/pages/my-moments/my-moments'
+    });
   },
 
-  // 联系我们
-  contactUs() {
-    wx.showModal({
-      title: '联系我们',
-      content: '电话：010-62846510\n手机：13681397661',
-      showCancel: false,
-      confirmText: '我知道了'
-    })
+  viewActivity(e) {
+    const { school_id, act_id } = e.currentTarget.dataset;
+    
+    // 切换活动上下文
+    app.globalData.school_id = school_id;
+    app.globalData.act_id = act_id;
+    wx.setStorageSync('school_id', school_id);
+    wx.setStorageSync('act_id', act_id);
+
+    showToast('已切换活动', 'success');
+
+    setTimeout(() => {
+      wx.switchTab({
+        url: '/pages/index/index'
+      });
+    }, 1000);
   },
 
-  // 积分说明
-  showPointsInfo() {
+  editProfile() {
+    showToast('功能开发中');
+  },
+
+  about() {
+    showAlert(
+      '研学活动小程序\n版本: 1.0.0\n\n记录每一次研学旅程的精彩瞬间',
+      '关于我们'
+    );
+  },
+
+  logout() {
     wx.showModal({
-      title: '积分说明',
-      content: '1. 上传项目并通过审核可获得积分\n2. 积分可用于兑换资料\n3. 不同资料需要不同积分数',
-      showCancel: false,
-      confirmText: '我知道了'
-    })
+      title: '提示',
+      content: '确定要退出登录吗?',
+      success: (res) => {
+        if (res.confirm) {
+          wx.clearStorageSync();
+          app.globalData.userInfo = null;
+          app.globalData.openid = null;
+          app.globalData.school_id = null;
+          app.globalData.act_id = null;
+
+          wx.reLaunch({
+            url: '/pages/register/register'
+          });
+        }
+      }
+    });
   }
-})
+});

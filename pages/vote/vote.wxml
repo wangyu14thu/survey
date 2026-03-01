@@ -1,0 +1,90 @@
+<!--pages/vote/vote.wxml-->
+<view class="vote-container">
+  <!-- 顶部提示 -->
+  <view class="vote-header">
+    <text class="header-title">选出你心中的研学目的地</text>
+    <view class="vote-rules">
+      <text class="rule-item">📅 截止日期: {{deadline}}</text>
+      <text class="rule-item">✅ 最多可选 {{maxSelect}} 个地方</text>
+    </view>
+  </view>
+
+  <!-- 投票结果展示 -->
+  <view class="result-section" wx:if="{{showResult && voteResult}}">
+    <view class="result-title">
+      <text class="result-icon">🎉</text>
+      <text class="result-text">投票结果</text>
+    </view>
+    <view class="result-list">
+      <view class="result-item" wx:for="{{voteResult.winners}}" wx:key="id">
+        <text class="winner-medal">{{index === 0 ? '🥇' : '🥈'}}</text>
+        <text class="winner-name">{{item.name}}</text>
+        <text class="winner-votes">{{item.votes}}票</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 目的地列表 -->
+  <view class="destinations-grid">
+    <view 
+      class="destination-card {{selectedIds.indexOf(item.id) > -1 ? 'selected' : ''}} {{hasVoted || showResult ? 'disabled' : ''}}" 
+      wx:for="{{destinations}}" 
+      wx:key="id"
+      bindtap="toggleSelect"
+      data-id="{{item.id}}"
+    >
+      <!-- 图片 -->
+      <view class="destination-image-wrapper">
+        <image class="destination-image" src="{{item.image}}" mode="aspectFill" />
+        <view class="vote-count" wx:if="{{showResult}}">
+          <text>{{item.votes || 0}}票</text>
+        </view>
+        <view class="selected-badge" wx:if="{{selectedIds.indexOf(item.id) > -1}}">
+          <text>✓</text>
+        </view>
+      </view>
+
+      <!-- 名称 -->
+      <view class="destination-info">
+        <text class="destination-name">{{item.name}}</text>
+        <button 
+          class="btn-detail" 
+          catchtap="viewDetail" 
+          data-id="{{item.id}}"
+          data-name="{{item.name}}"
+          data-activities="{{item.activities}}"
+        >
+          查看活动
+        </button>
+      </view>
+
+      <!-- 投票按钮 -->
+      <view class="vote-btn-wrapper" wx:if="{{!hasVoted && !showResult}}">
+        <button 
+          class="btn-vote {{selectedIds.indexOf(item.id) > -1 ? 'btn-selected' : ''}}"
+          catchtap="toggleSelect"
+          data-id="{{item.id}}"
+        >
+          {{selectedIds.indexOf(item.id) > -1 ? '已选择' : '选择'}}
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部提交按钮 -->
+  <view class="submit-wrapper" wx:if="{{!hasVoted && !showResult}}">
+    <button 
+      class="btn-submit {{selectedIds.length > 0 ? '' : 'btn-disabled'}}" 
+      bindtap="submitVote"
+      disabled="{{selectedIds.length === 0}}"
+    >
+      确认投票 (已选{{selectedIds.length}}/{{maxSelect}})
+    </button>
+  </view>
+
+  <!-- 已投票提示 -->
+  <view class="voted-tip" wx:if="{{hasVoted && !showResult}}">
+    <text class="tip-icon">✓</text>
+    <text class="tip-text">您已完成投票,请等待结果公布</text>
+  </view>
+</view>

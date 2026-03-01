@@ -2,26 +2,67 @@
 <view class="register-container">
   <!-- Header -->
   <view class="register-header">
-    <text class="header-icon">👨‍🏫</text>
-    <text class="header-title">教师注册</text>
-    <text class="header-subtitle">欢迎加入PBL营</text>
+    <text class="header-icon">🎒</text>
+    <text class="header-title">欢迎参加研学活动</text>
+    <text class="header-subtitle">请填写学生信息完成注册</text>
   </view>
 
   <!-- Form -->
   <view class="register-form">
-    <!-- 昵称 -->
+    <!-- 学生姓名 -->
     <view class="form-item">
       <view class="label">
-        <text class="label-text">昵称</text>
+        <text class="label-text">学生姓名</text>
         <text class="required">*</text>
       </view>
       <input 
         class="input" 
         type="text" 
-        placeholder="请输入您的昵称"
-        value="{{formData.nickname}}"
-        bindinput="onNicknameInput"
+        placeholder="请输入学生姓名"
+        value="{{formData.studentName}}"
+        bindinput="onStudentNameInput"
       />
+    </view>
+
+    <!-- 家长手机号 -->
+    <view class="form-item">
+      <view class="label">
+        <text class="label-text">家长手机号</text>
+        <text class="required">*</text>
+      </view>
+      <input 
+        class="input" 
+        type="number" 
+        maxlength="11" 
+        placeholder="请输入家长手机号"
+        value="{{formData.parentPhone}}"
+        bindinput="onParentPhoneInput"
+      />
+    </view>
+
+    <!-- 短信验证码 -->
+    <view class="form-item">
+      <view class="label">
+        <text class="label-text">短信验证码</text>
+        <text class="required">*</text>
+      </view>
+      <view class="code-input-wrapper">
+        <input 
+          class="input code-input" 
+          type="number" 
+          maxlength="6" 
+          placeholder="请输入验证码"
+          value="{{formData.smsCode}}"
+          bindinput="onSmsCodeInput"
+        />
+        <button 
+          class="btn-code {{countdown > 0 ? 'btn-disabled' : ''}}" 
+          bindtap="getSmsCode"
+          disabled="{{countdown > 0}}"
+        >
+          {{countdown > 0 ? countdown + 's' : '获取验证码'}}
+        </button>
+      </view>
     </view>
 
     <!-- 年级 -->
@@ -37,69 +78,29 @@
         bindchange="onGradeChange"
       >
         <view class="picker {{gradeIndex === -1 ? 'placeholder' : ''}}">
-          {{gradeIndex === -1 ? '请选择任教年级' : gradeList[gradeIndex]}}
+          {{gradeIndex === -1 ? '请选择年级' : gradeList[gradeIndex]}}
           <text class="arrow">›</text>
         </view>
       </picker>
     </view>
 
-    <!-- 学科 -->
+    <!-- 班级 -->
     <view class="form-item">
       <view class="label">
-        <text class="label-text">学科</text>
+        <text class="label-text">班级</text>
         <text class="required">*</text>
       </view>
       <picker 
         mode="selector" 
-        range="{{subjectList}}" 
-        value="{{subjectIndex}}" 
-        bindchange="onSubjectChange"
+        range="{{classList}}" 
+        value="{{classIndex}}" 
+        bindchange="onClassChange"
       >
-        <view class="picker {{subjectIndex === -1 ? 'placeholder' : ''}}">
-          {{subjectIndex === -1 ? '请选择任教学科' : subjectList[subjectIndex]}}
+        <view class="picker {{classIndex === -1 ? 'placeholder' : ''}}">
+          {{classIndex === -1 ? '请选择班级' : classList[classIndex]}}
           <text class="arrow">›</text>
         </view>
       </picker>
-    </view>
-
-    <!-- 地区 -->
-    <view class="form-item">
-      <view class="label">
-        <text class="label-text">地区</text>
-        <text class="required">*</text>
-      </view>
-      <picker 
-        mode="region" 
-        value="{{formData.region}}" 
-        bindchange="onRegionChange"
-      >
-        <view class="picker {{formData.region.length === 0 ? 'placeholder' : ''}}">
-          {{formData.region.length === 0 ? '请选择所在地区' : formData.region.join(' ')}}
-          <text class="arrow">›</text>
-        </view>
-      </picker>
-    </view>
-
-    <!-- 手机号 -->
-    <view class="form-item">
-      <view class="label">
-        <text class="label-text">手机号</text>
-        <text class="required">*</text>
-      </view>
-      <input 
-        class="input" 
-        type="number" 
-        maxlength="11" 
-        placeholder="请输入手机号"
-        value="{{formData.phone}}"
-        bindinput="onPhoneInput"
-      />
-    </view>
-
-    <!-- 提示 -->
-    <view class="form-tip">
-      <text class="tip-icon">ℹ️</text>
-      <text class="tip-text">请确保信息准确，用于后续身份验证</text>
     </view>
 
     <!-- 提交按钮 -->
@@ -112,4 +113,3 @@
     </button>
   </view>
 </view>
-

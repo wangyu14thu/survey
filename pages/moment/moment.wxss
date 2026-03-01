@@ -1,0 +1,183 @@
+/* pages/moment/moment.wxss */
+.moment-container {
+  min-height: 100vh;
+  background-color: #F7F7F7;
+  padding-bottom: 120rpx;
+}
+
+.moment-list {
+  padding: 20rpx;
+}
+
+.moment-card {
+  background-color: white;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+}
+
+.moment-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.user-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+  background-color: #F5F5F5;
+}
+
+.user-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.user-class {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.moment-time {
+  font-size: 24rpx;
+  color: #BBB;
+}
+
+.moment-content {
+  margin-bottom: 20rpx;
+}
+
+.content-text {
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.7;
+  display: block;
+  word-break: break-all;
+}
+
+.moment-images {
+  margin-bottom: 20rpx;
+}
+
+.images-grid {
+  display: grid;
+  gap: 10rpx;
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+
+.images-1 {
+  grid-template-columns: 1fr;
+}
+
+.images-2,
+.images-4 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.images-3,
+.images-5,
+.images-6 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.moment-image {
+  width: 100%;
+  height: 200rpx;
+  background-color: #F5F5F5;
+}
+
+.images-1 .moment-image {
+  height: 400rpx;
+}
+
+.moment-actions {
+  display: flex;
+  gap: 40rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #F0F0F0;
+}
+
+.action-item {
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.action-icon {
+  font-size: 32rpx;
+  margin-right: 8rpx;
+}
+
+.action-count {
+  font-size: 24rpx;
+}
+
+.loading-more,
+.no-more {
+  text-align: center;
+  padding: 30rpx 0;
+  font-size: 26rpx;
+  color: #999;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 150rpx 30rpx;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 30rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+  margin-bottom: 16rpx;
+}
+
+.empty-tip {
+  font-size: 24rpx;
+  color: #BBB;
+}
+
+.publish-btn {
+  position: fixed;
+  bottom: 120rpx;
+  right: 30rpx;
+  width: 100rpx;
+  height: 100rpx;
+  background: linear-gradient(135deg, #FF6B6B 0%, #FFB88C 100%);
+  border-radius: 50%;
+  box-shadow: 0 8rpx 24rpx rgba(255, 107, 107, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.publish-btn:active {
+  transform: scale(0.9);
+}
+
+.btn-icon {
+  font-size: 60rpx;
+  color: white;
+  font-weight: 300;
+}

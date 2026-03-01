@@ -1,0 +1,85 @@
+<!--pages/moment-publish/moment-publish.wxml-->
+<view class="publish-container">
+  <!-- 内容输入 -->
+  <view class="content-section">
+    <textarea 
+      class="content-input" 
+      placeholder="写下这次研学中，你印象最深的一件事或一个收获..."
+      placeholder-style="color: #CCC"
+      value="{{content}}"
+      bindinput="onContentInput"
+      maxlength="1000"
+      auto-height
+    />
+    <text class="char-count">{{content.length}}/1000</text>
+  </view>
+
+  <!-- 图片上传 -->
+  <view class="images-section">
+    <view class="section-title">
+      <text class="title-icon">📷</text>
+      <text class="title-text">添加图片 (最多{{maxImages}}张)</text>
+    </view>
+
+    <view class="images-grid">
+      <view 
+        class="image-item" 
+        wx:for="{{images}}" 
+        wx:key="*this"
+      >
+        <image 
+          class="upload-image" 
+          src="{{item}}" 
+          mode="aspectFill"
+          bindtap="previewImage"
+          data-index="{{index}}"
+        />
+        <view 
+          class="delete-btn" 
+          catchtap="deleteImage"
+          data-index="{{index}}"
+        >
+          <text class="delete-icon">×</text>
+        </view>
+      </view>
+
+      <view 
+        class="add-image-btn" 
+        wx:if="{{images.length < maxImages}}"
+        bindtap="chooseImage"
+      >
+        <text class="add-icon">+</text>
+        <text class="add-text">添加图片</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 可见性设置 -->
+  <view class="visibility-section">
+    <view class="section-title">
+      <text class="title-icon">👀</text>
+      <text class="title-text">可见范围</text>
+    </view>
+
+    <view class="visibility-option">
+      <text class="option-label">仅本班同学可见</text>
+      <switch 
+        class="option-switch" 
+        checked="{{classOnly}}"
+        bindchange="toggleClassOnly"
+        color="#FF6B6B"
+      />
+    </view>
+  </view>
+
+  <!-- 发布按钮 -->
+  <view class="publish-btn-wrapper">
+    <button 
+      class="btn-publish {{canSubmit ? '' : 'btn-disabled'}}" 
+      bindtap="publish"
+      disabled="{{!canSubmit}}"
+    >
+      发布动态
+    </button>
+  </view>
+</view>

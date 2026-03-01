@@ -1,175 +1,197 @@
 // pages/register/register.js
-const app = getApp()
+const app = getApp();
+import { register } from '../../utils/api';
+import { validatePhone, validateSmsCode, showToast, showLoading, hideLoading, getGradeList, getClassList } from '../../utils/util';
 
 Page({
   data: {
     formData: {
-      nickname: '',
+      studentName: '',
+      parentPhone: '',
+      smsCode: '',
       grade: '',
-      subject: '',
-      region: [],
-      phone: ''
+      class: ''
     },
-    gradeList: [
-      '一年级', '二年级', '三年级', '四年级', '五年级', '六年级',
-      '初一', '初二', '初三',
-      '高一', '高二', '高三'
-    ],
+    gradeList: getGradeList(),
     gradeIndex: -1,
-    subjectList: [
-      '语文', '数学', '英语', '物理', '化学', '生物',
-      '历史', '地理', '政治', '音乐', '体育', '美术',
-      '信息技术', '通用技术', '科学', '综合实践', '其他'
-    ],
-    subjectIndex: -1,
-    canSubmit: false
+    classList: getClassList(),
+    classIndex: -1,
+    canSubmit: false,
+    countdown: 0,
+    timer: null
   },
 
   onLoad(options) {
-    // 检查是否已注册
-    const teacherInfo = wx.getStorageSync('teacherInfo')
-    if (teacherInfo) {
+    const userInfo = wx.getStorageSync('userInfo');
+    if (userInfo) {
       wx.switchTab({
         url: '/pages/index/index'
-      })
+      });
+      return;
+    }
+
+    if (!app.hasActivityContext()) {
+      showToast('请通过活动二维码进入');
+      setTimeout(() => {
+        wx.exitMiniProgram();
+      }, 2000);
     }
   },
 
-  // 昵称输入
-  onNicknameInput(e) {
-    this.setData({
-      'formData.nickname': e.detail.value
-    }, () => {
-      this.checkCanSubmit()
-    })
+  onUnload() {
+    if (this.data.timer) {
+      clearInterval(this.data.timer);
+    }
   },
 
-  // 年级选择
+  onStudentNameInput(e) {
+    this.setData({
+      'formData.studentName': e.detail.value
+    }, () => {
+      this.checkCanSubmit();
+    });
+  },
+
+  onParentPhoneInput(e) {
+    this.setData({
+      'formData.parentPhone': e.detail.value
+    }, () => {
+      this.checkCanSubmit();
+    });
+  },
+
+  onSmsCodeInput(e) {
+    this.setData({
+      'formData.smsCode': e.detail.value
+    }, () => {
+      this.checkCanSubmit();
+    });
+  },
+
   onGradeChange(e) {
-    const index = e.detail.value
+    const index = e.detail.value;
     this.setData({
       gradeIndex: index,
       'formData.grade': this.data.gradeList[index]
     }, () => {
-      this.checkCanSubmit()
-    })
+      this.checkCanSubmit();
+    });
   },
 
-  // 学科选择
-  onSubjectChange(e) {
-    const index = e.detail.value
+  onClassChange(e) {
+    const index = e.detail.value;
     this.setData({
-      subjectIndex: index,
-      'formData.subject': this.data.subjectList[index]
+      classIndex: index,
+      'formData.class': this.data.classList[index]
     }, () => {
-      this.checkCanSubmit()
-    })
+      this.checkCanSubmit();
+    });
   },
 
-  // 地区选择
-  onRegionChange(e) {
-    this.setData({
-      'formData.region': e.detail.value
-    }, () => {
-      this.checkCanSubmit()
-    })
-  },
-
-  // 手机号输入
-  onPhoneInput(e) {
-    this.setData({
-      'formData.phone': e.detail.value
-    }, () => {
-      this.checkCanSubmit()
-    })
-  },
-
-  // 检查是否可以提交
   checkCanSubmit() {
-    const { nickname, grade, subject, region, phone } = this.data.formData
-    const canSubmit = nickname.trim() !== '' &&
+    const { studentName, parentPhone, smsCode, grade, class: className } = this.data.formData;
+    const canSubmit = studentName.trim() !== '' &&
+                     validatePhone(parentPhone) &&
+                     validateSmsCode(smsCode) &&
                      grade !== '' &&
-                     subject !== '' &&
-                     region.length > 0 &&
-                     phone.length === 11
-    this.setData({ canSubmit })
+                     className !== '';
+    this.setData({ canSubmit });
   },
 
-  // 提交注册
-  async submitRegister() {
-    if (!this.data.canSubmit) {
-      return
+  async getSmsCode() {
+    const phone = this.data.formData.parentPhone;
+    
+    if (!validatePhone(phone)) {
+      showToast('请输入正确的手机号');
+      return;
     }
 
-    // 验证手机号
-    const phoneReg = /^1[3-9]\d{9}$/
-    if (!phoneReg.test(this.data.formData.phone)) {
-      wx.showToast({
-        title: '请输入正确的手机号',
-        icon: 'none'
-      })
-      return
+    if (this.data.countdown > 0) {
+      return;
     }
 
-    wx.showLoading({
-      title: '注册中...',
-      mask: true
-    })
+    showLoading('发送中...');
 
     try {
-      // 获取 openid
+      await wx.cloud.callFunction({
+        name: 'sms',
+        data: {
+          action: 'sendCode',
+          phone
+        }
+      });
+
+      hideLoading();
+      showToast('验证码已发送', 'success');
+
+      this.setData({ countdown: 60 });
+      this.data.timer = setInterval(() => {
+        const countdown = this.data.countdown - 1;
+        if (countdown <= 0) {
+          clearInterval(this.data.timer);
+          this.data.timer = null;
+        }
+        this.setData({ countdown });
+      }, 1000);
+    } catch (err) {
+      hideLoading();
+      console.error('发送验证码失败:', err);
+      showToast('发送失败,请重试');
+    }
+  },
+
+  async submitRegister() {
+    if (!this.data.canSubmit) {
+      return;
+    }
+
+    showLoading('注册中...');
+
+    try {
       const loginRes = await wx.cloud.callFunction({
         name: 'login'
-      })
-      const openid = loginRes.result.openid
+      });
+      const openid = loginRes.result.openid;
 
-      // 调用注册云函数
-      const res = await wx.cloud.callFunction({
-        name: 'teacher',
-        data: {
-          action: 'register',
+      const res = await register({
+        openid,
+        studentName: this.data.formData.studentName,
+        parentPhone: this.data.formData.parentPhone,
+        smsCode: this.data.formData.smsCode,
+        grade: this.data.formData.grade,
+        class: this.data.formData.class,
+        registerTime: new Date().getTime()
+      });
+
+      hideLoading();
+
+      if (res.success) {
+        const userInfo = {
           openid,
-          ...this.data.formData,
-          points: 0, // 初始积分
-          registerTime: new Date().getTime()
-        }
-      })
+          studentName: this.data.formData.studentName,
+          parentPhone: this.data.formData.parentPhone,
+          grade: this.data.formData.grade,
+          class: this.data.formData.class,
+          school_id: app.globalData.school_id,
+          act_id: app.globalData.act_id
+        };
 
-      wx.hideLoading()
+        wx.setStorageSync('userInfo', userInfo);
+        app.globalData.userInfo = userInfo;
+        app.globalData.openid = openid;
 
-      if (res.result.success) {
-        const teacherInfo = {
-          ...this.data.formData,
-          openid,
-          points: 0,
-          region: this.data.formData.region.join(' ')
-        }
-
-        wx.setStorageSync('teacherInfo', teacherInfo)
-        app.globalData.teacherInfo = teacherInfo
-        app.globalData.openid = openid
-
-        wx.showToast({
-          title: '注册成功',
-          icon: 'success'
-        })
+        showToast('注册成功', 'success');
 
         setTimeout(() => {
           wx.switchTab({
             url: '/pages/index/index'
-          })
-        }, 1500)
-      } else {
-        throw new Error(res.result.message || '注册失败')
+          });
+        }, 1500);
       }
     } catch (err) {
-      wx.hideLoading()
-      console.error('注册失败', err)
-      wx.showToast({
-        title: '注册失败，请重试',
-        icon: 'none'
-      })
+      hideLoading();
+      console.error('注册失败:', err);
+      showToast(err.message || '注册失败,请重试');
     }
   }
-})
-
+});

@@ -1,0 +1,271 @@
+/* pages/vote/vote.wxss */
+.vote-container {
+  min-height: 100vh;
+  background-color: #F7F7F7;
+  padding-bottom: 120rpx;
+}
+
+.vote-header {
+  background: linear-gradient(135deg, #FF6B6B 0%, #FFB88C 100%);
+  padding: 40rpx 30rpx;
+  border-radius: 0 0 40rpx 40rpx;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: white;
+  display: block;
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+.vote-rules {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 20rpx 30rpx;
+  border-radius: 20rpx;
+  backdrop-filter: blur(10rpx);
+}
+
+.rule-item {
+  font-size: 26rpx;
+  color: white;
+  display: block;
+  line-height: 1.8;
+}
+
+.result-section {
+  margin: 30rpx;
+  background-color: white;
+  padding: 30rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+}
+
+.result-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20rpx;
+}
+
+.result-icon {
+  font-size: 40rpx;
+  margin-right: 12rpx;
+}
+
+.result-text {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.result-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.result-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  background-color: #FFF5F5;
+  border-radius: 12rpx;
+}
+
+.winner-medal {
+  font-size: 36rpx;
+  margin-right: 16rpx;
+}
+
+.winner-name {
+  flex: 1;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.winner-votes {
+  font-size: 26rpx;
+  color: #FF6B6B;
+  font-weight: bold;
+}
+
+.destinations-grid {
+  padding: 30rpx;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20rpx;
+}
+
+.destination-card {
+  background-color: white;
+  border-radius: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+  transition: all 0.3s;
+}
+
+.destination-card.selected {
+  border: 4rpx solid #FF6B6B;
+  box-shadow: 0 8rpx 24rpx rgba(255, 107, 107, 0.3);
+}
+
+.destination-card.disabled {
+  opacity: 0.7;
+}
+
+.destination-card:active:not(.disabled) {
+  transform: scale(0.95);
+}
+
+.destination-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 280rpx;
+}
+
+.destination-image {
+  width: 100%;
+  height: 100%;
+}
+
+.vote-count {
+  position: absolute;
+  top: 10rpx;
+  right: 10rpx;
+  background-color: rgba(255, 107, 107, 0.9);
+  color: white;
+  font-size: 24rpx;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-weight: bold;
+}
+
+.selected-badge {
+  position: absolute;
+  top: 10rpx;
+  left: 10rpx;
+  width: 48rpx;
+  height: 48rpx;
+  background-color: #FF6B6B;
+  color: white;
+  font-size: 32rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.destination-info {
+  padding: 20rpx;
+}
+
+.destination-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 12rpx;
+  line-height: 1.4;
+}
+
+.btn-detail {
+  width: 100%;
+  height: 56rpx;
+  background-color: #F7F7F7;
+  color: #666;
+  font-size: 24rpx;
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0;
+  line-height: 56rpx;
+}
+
+.vote-btn-wrapper {
+  padding: 0 20rpx 20rpx;
+}
+
+.btn-vote {
+  width: 100%;
+  height: 64rpx;
+  background-color: #FF6B6B;
+  color: white;
+  font-size: 26rpx;
+  font-weight: bold;
+  border-radius: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0;
+  line-height: 64rpx;
+}
+
+.btn-vote.btn-selected {
+  background-color: #4CAF50;
+}
+
+.submit-wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20rpx 30rpx;
+  background-color: white;
+  box-shadow: 0 -4rpx 12rpx rgba(0, 0, 0, 0.08);
+}
+
+.btn-submit {
+  width: 100%;
+  height: 88rpx;
+  background: linear-gradient(135deg, #FF6B6B 0%, #FFB88C 100%);
+  color: white;
+  font-size: 32rpx;
+  font-weight: bold;
+  border-radius: 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.btn-disabled {
+  background: #E0E0E0 !important;
+  color: #999 !important;
+}
+
+.voted-tip {
+  margin: 30rpx;
+  padding: 30rpx;
+  background: linear-gradient(135deg, #E8F5E9 0%, #F1F8E9 100%);
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tip-icon {
+  width: 48rpx;
+  height: 48rpx;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 32rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16rpx;
+  font-weight: bold;
+}
+
+.tip-text {
+  font-size: 28rpx;
+  color: #2E7D32;
+  font-weight: 500;
+}

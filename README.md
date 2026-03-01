@@ -1,143 +1,310 @@
-# PBL营（教师端）小程序
+# 研学活动小程序
 
-## 项目简介
+一个基于微信小程序的研学活动管理系统,支持通过二维码扫描进入特定学校和活动。
 
-PBL营（教师端）是一款面向教师的项目式学习（Project-Based Learning）资源平台小程序。教师可以浏览和兑换专业理论资料、项目案例、实操工具等，也可以上传自己的项目作品获取积分。
+## 功能特性
 
-## 功能模块
+### 1. 二维码扫码进入
+- 每个学校×年级×活动生成专属二维码
+- 扫码自动携带 school_id 和 act_id
+- 所有操作限定在当前活动范围内
 
-### 1. 注册页面
-- 昵称
-- 年级（任教年级）
-- 学科（任教学科）
-- 地区
-- 手机号
+### 2. 用户注册
+- 学生姓名
+- 家长手机号 + 短信验证码
+- 年级和班级选择
+- 自动绑定扫码进入的活动
 
-### 2. 首页
-- **专业理论**：PBL项目式学习、跨学科主题学习资料
-- **项目案例**：1-6年级各类实践案例
-- **实操工具**：讨论、成果、管理、评价、知识五大类工具
-- **培训课程**：博研达项目式学习研修营课程信息
-- **专题讲座**：敬请期待
+### 3. 研学之旅(首页)
+四站式地图路线设计:
+- **第一站:目的地投票** - 选择研学目的地(最多2个)
+- **第二站:任务预习** - 学习任务和答题解锁
+- **第三站:研学过程** - 图文直播时间线
+- **第四站:活动回顾** - 公众号文章展示
 
-### 3. 消息
-- 系统消息通知
+### 4. 相册
+- 相册列表(可按年级筛选)
+- 瀑布流照片展示
+- 图片预览和保存
 
-### 4. 我的
-- 个人资料展示
-- 积分管理
-- 上传作品
-- 已购资料
-- 联系我们
+### 5. 研学圈
+- 发布动态(文字+图片,最多6张)
+- 动态列表(类微博形式)
+- 点赞和评论功能
+- 仅本班可见选项
 
-## 积分机制
+### 6. 我的
+- 个人信息展示
+- 我的研学活动列表
+- 活动切换功能
+- 退出登录
 
-### 获取积分
-- 上传项目作品，审核通过后获得积分（根据作品质量给予不同积分）
+## 技术架构
 
-### 使用积分
-- 兑换专业理论资料
-- 兑换项目案例
-- 兑换实操工具
+### 前端框架
+- 微信小程序原生开发
+- 组件化设计
+- 响应式布局
 
-## 技术栈
-
-- 微信小程序
+### 数据管理
 - 微信云开发
-- 云函数
-- 云数据库
-- 云存储
+- 云函数处理业务逻辑
+- 云存储管理图片
 
-## 部署说明
-
-### 1. 配置环境
-
-在 `app.js` 中配置云开发环境ID：
-
-```javascript
-wx.cloud.init({
-  traceUser: true,
-  env: 'cloud1-9gpi4pkt9a8bce92' // 替换为你的环境ID
-})
+### 目录结构
+```
+survey/
+├── pages/                      # 页面目录
+│   ├── register/              # 注册页
+│   ├── index/                 # 首页(研学之旅)
+│   ├── vote/                  # 目的地投票
+│   ├── preview/               # 任务预习
+│   ├── process/               # 研学过程
+│   ├── review/                # 活动回顾
+│   ├── album/                 # 相册列表
+│   ├── album-detail/          # 相册详情
+│   ├── moment/                # 研学圈
+│   ├── moment-publish/        # 发布动态
+│   ├── moment-detail/         # 动态详情
+│   └── profile/               # 我的
+├── utils/                      # 工具类
+│   ├── api.js                 # API接口封装
+│   └── util.js                # 工具函数
+├── images/                     # 图片资源
+├── app.js                      # 小程序入口
+├── app.json                    # 全局配置
+└── app.wxss                    # 全局样式
 ```
 
-在 `project.config.json` 中配置AppID：
+## 页面说明
 
-```json
+### 注册页面 (pages/register)
+- 通过扫码携带的参数自动绑定活动
+- 短信验证码验证
+- 年级班级选择
+
+### 首页 (pages/index)
+- 显示当前学校和活动名称
+- 四站地图路线展示
+- 根据阶段状态显示解锁/进行中/已完成
+
+### 目的地投票 (pages/vote)
+- 网格布局展示目的地
+- 支持多选(可配置最大数量)
+- 查看活动详情
+- 投票结果展示
+
+### 任务预习 (pages/preview)
+- Tab切换:挑战/技能/问题
+- 问题答题功能
+- 答对后解锁下一站
+
+### 研学过程 (pages/process)
+- 时间线布局
+- 图文混排展示
+- 下拉刷新,上拉加载更多
+
+### 活动回顾 (pages/review)
+- 富文本内容展示
+- 图片集展示
+- 图片预览功能
+
+### 相册 (pages/album)
+- 年级筛选
+- 相册卡片展示
+- 照片数量统计
+
+### 相册详情 (pages/album-detail)
+- 瀑布流布局
+- 图片预览
+- 图片保存
+
+### 研学圈 (pages/moment)
+- 动态列表展示
+- 点赞评论数统计
+- 浮动发布按钮
+
+### 发布动态 (pages/moment-publish)
+- 文字输入(最多1000字)
+- 图片上传(最多6张)
+- 可见范围设置
+
+### 动态详情 (pages/moment-detail)
+- 动态内容展示
+- 点赞功能
+- 评论列表
+- 评论输入
+
+### 我的 (pages/profile)
+- 个人信息卡片
+- 功能菜单
+- 活动列表和切换
+- 退出登录
+
+## 云函数说明
+
+需要创建以下云函数:
+
+### 1. login
+- 获取用户 openid
+
+### 2. user
+- register: 用户注册
+- getUserInfo: 获取用户信息
+- getActivities: 获取用户参与的活动列表
+
+### 3. sms
+- sendCode: 发送短信验证码
+- verifyCode: 验证短信验证码
+
+### 4. activity
+- getInfo: 获取活动信息
+- getStages: 获取活动阶段状态
+
+### 5. vote
+- getList: 获取投票列表
+- submit: 提交投票
+- getResult: 获取投票结果
+
+### 6. preview
+- getTasks: 获取预习任务
+- submitAnswer: 提交答案
+
+### 7. process
+- getList: 获取研学过程列表
+
+### 8. review
+- getArticle: 获取回顾文章
+
+### 9. album
+- getList: 获取相册列表
+- getDetail: 获取相册详情
+
+### 10. moment
+- getList: 获取动态列表
+- getDetail: 获取动态详情
+- publish: 发布动态
+- like: 点赞
+- comment: 评论
+- getComments: 获取评论列表
+- getMyList: 获取我的动态
+- delete: 删除动态
+
+## 数据库设计
+
+### users - 用户表
+```javascript
 {
-  "appid": "wx2d26ef0658587b77" // 替换为你的AppID
+  _id: 'auto',
+  openid: 'string',
+  studentName: 'string',
+  parentPhone: 'string',
+  grade: 'string',
+  class: 'string',
+  school_id: 'string',
+  act_id: 'string',
+  registerTime: 'number',
+  avatar: 'string'
 }
 ```
 
-### 2. 创建数据库集合
-
-在云开发控制台创建以下数据库集合：
-
-- `teachers` - 教师信息
-- `works` - 教师作品
-- `purchases` - 购买记录
-- `materials` - 资料库（可选）
-
-详见 `DATABASE_SCHEMA.md`
-
-### 3. 部署云函数
-
-在微信开发者工具中，依次部署以下云函数：
-
-1. `cloudfunctions/login/` - 右键 → 上传并部署：云端安装依赖
-2. `cloudfunctions/teacher/` - 右键 → 上传并部署：云端安装依赖
-
-### 4. 测试运行
-
-- 在微信开发者工具中点击"编译"
-- 测试注册流程
-- 测试各功能模块
-
-## 联系方式
-
-- 电话：010-62846510
-- 手机：13681397661
-
-## 开发说明
-
-### 目录结构
-
-```
-.
-├── app.js                  # 小程序入口文件
-├── app.json               # 小程序配置
-├── app.wxss              # 全局样式
-├── project.config.json   # 项目配置
-├── cloudfunctions/       # 云函数目录
-│   ├── login/           # 登录云函数
-│   └── teacher/         # 教师相关云函数
-├── pages/               # 页面目录
-│   ├── index/          # 首页
-│   ├── register/       # 注册页面
-│   ├── message/        # 消息页面
-│   ├── profile/        # 我的页面
-│   ├── theory/         # 专业理论列表
-│   ├── theory-detail/  # 理论资料详情
-│   ├── cases/          # 项目案例列表
-│   ├── case-detail/    # 案例详情
-│   ├── tools/          # 实操工具列表
-│   ├── tool-detail/    # 工具详情
-│   ├── training/       # 培训课程
-│   ├── lecture/        # 专题讲座
-│   └── upload/         # 上传作品
-├── images/             # 图片资源
-└── README.md          # 项目说明
+### activities - 活动表
+```javascript
+{
+  _id: 'auto',
+  school_id: 'string',
+  act_id: 'string',
+  schoolName: 'string',
+  activityName: 'string',
+  grade: 'string',
+  startTime: 'number',
+  endTime: 'number',
+  status: 'string', // ongoing/finished
+  stages: 'array'
+}
 ```
 
-### 注意事项
+### votes - 投票表
+```javascript
+{
+  _id: 'auto',
+  school_id: 'string',
+  act_id: 'string',
+  userId: 'string',
+  destinationIds: 'array',
+  createTime: 'number'
+}
+```
 
-1. 首次使用需要开通云开发服务
-2. 云函数必须"上传并部署：云端安装依赖"
-3. 数据库集合需要手动创建
-4. 建议设置数据库权限为"仅创建者可读写"
+### moments - 动态表
+```javascript
+{
+  _id: 'auto',
+  school_id: 'string',
+  act_id: 'string',
+  userId: 'string',
+  content: 'string',
+  images: 'array',
+  classOnly: 'boolean',
+  likeCount: 'number',
+  commentCount: 'number',
+  createTime: 'number'
+}
+```
 
-## 版本信息
+### comments - 评论表
+```javascript
+{
+  _id: 'auto',
+  momentId: 'string',
+  userId: 'string',
+  content: 'string',
+  createTime: 'number'
+}
+```
 
-- 版本：1.0.0
-- 更新日期：2026-01-28
+## 小程序码生成
 
+后台需要提供生成小程序码的接口,参数格式:
+```javascript
+{
+  scene: 'school_id=xxx&act_id=yyy',
+  page: 'pages/register/register',
+  width: 430
+}
+```
+
+## 部署说明
+
+1. 在微信公众平台注册小程序
+2. 开通云开发环境
+3. 修改 `app.js` 中的云开发环境 ID
+4. 上传云函数
+5. 配置数据库权限
+6. 上传小程序代码
+7. 提交审核发布
+
+## 注意事项
+
+1. 所有接口需要校验 school_id 和 act_id
+2. 图片上传需要限制大小和数量
+3. 内容发布需要进行敏感词过滤
+4. 用户隐私信息需要加密存储
+5. 定期清理过期活动数据
+
+## 未来优化
+
+1. 增加消息通知功能
+2. 支持视频上传和播放
+3. 增加数据统计分析
+4. 优化图片加载性能
+5. 增加分享功能
+6. 支持导出活动报告
+
+## 版本历史
+
+### v1.0.0 (2026-03-01)
+- 初始版本发布
+- 实现核心功能模块
+- 支持扫码进入
+- 完成四站式研学流程

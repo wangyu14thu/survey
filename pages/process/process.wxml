@@ -1,0 +1,72 @@
+<!--pages/process/process.wxml-->
+<view class="process-container">
+  <!-- 顶部提示 -->
+  <view class="process-header">
+    <text class="header-icon">🎒</text>
+    <text class="header-title">研学过程直播</text>
+    <text class="header-subtitle">记录每一个精彩瞬间</text>
+  </view>
+
+  <!-- 时间线列表 -->
+  <view class="timeline-list">
+    <view class="timeline-item" wx:for="{{posts}}" wx:key="id">
+      <!-- 时间点 -->
+      <view class="timeline-dot"></view>
+      <view class="timeline-line" wx:if="{{index < posts.length - 1}}"></view>
+
+      <!-- 内容卡片 -->
+      <view class="post-card">
+        <!-- 时间 -->
+        <view class="post-time">
+          <text class="time-icon">🕐</text>
+          <text class="time-text">{{item.time}}</text>
+        </view>
+
+        <!-- 标题 -->
+        <text class="post-title" wx:if="{{item.title}}">{{item.title}}</text>
+
+        <!-- 文本内容 -->
+        <text class="post-content" wx:if="{{item.content}}">{{item.content}}</text>
+
+        <!-- 图片 -->
+        <view class="post-images" wx:if="{{item.images && item.images.length > 0}}">
+          <view class="images-grid images-{{item.images.length}}">
+            <image 
+              class="post-image" 
+              wx:for="{{item.images}}" 
+              wx:key="*this"
+              wx:for-item="image"
+              src="{{image}}" 
+              mode="aspectFill"
+              bindtap="previewImage"
+              data-current="{{image}}"
+              data-urls="{{item.images}}"
+            />
+          </view>
+        </view>
+
+        <!-- 位置 -->
+        <view class="post-location" wx:if="{{item.location}}">
+          <text class="location-icon">📍</text>
+          <text class="location-text">{{item.location}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 加载状态 -->
+    <view class="loading-more" wx:if="{{loading}}">
+      <text>加载中...</text>
+    </view>
+
+    <!-- 没有更多 -->
+    <view class="no-more" wx:if="{{!hasMore && posts.length > 0}}">
+      <text>已经到底了</text>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{posts.length === 0 && !loading}}">
+      <text class="empty-icon">📭</text>
+      <text class="empty-text">暂无直播内容</text>
+    </view>
+  </view>
+</view>
