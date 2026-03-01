@@ -1,7 +1,7 @@
 {
-  "name": "login",
+  "name": "sms",
   "version": "1.0.0",
-  "description": "获取用户openid",
+  "description": "短信验证码服务",
   "main": "index.js",
   "dependencies": {
     "wx-server-sdk": "~2.6.3"

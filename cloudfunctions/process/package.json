@@ -1,7 +1,7 @@
 {
-  "name": "login",
+  "name": "process",
   "version": "1.0.0",
-  "description": "获取用户openid",
+  "description": "研学过程",
   "main": "index.js",
   "dependencies": {
     "wx-server-sdk": "~2.6.3"

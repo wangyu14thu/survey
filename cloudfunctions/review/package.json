@@ -1,7 +1,7 @@
 {
-  "name": "login",
+  "name": "review",
   "version": "1.0.0",
-  "description": "获取用户openid",
+  "description": "活动回顾",
   "main": "index.js",
   "dependencies": {
     "wx-server-sdk": "~2.6.3"
