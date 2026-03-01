@@ -30,10 +30,12 @@ Page({
       return;
     }
 
-    if (!app.hasActivityContext()) {
+    // 开发模式：不检查活动上下文
+    const DEV_MODE = true;
+    if (!DEV_MODE && !app.hasActivityContext()) {
       showToast('请通过活动二维码进入');
       setTimeout(() => {
-        wx.exitMiniProgram();
+        // wx.exitMiniProgram();
       }, 2000);
     }
   },

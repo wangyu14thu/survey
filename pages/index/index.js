@@ -16,6 +16,23 @@ Page({
   },
 
   onLoad() {
+    // 开发模式：模拟用户信息和活动上下文
+    const DEV_MODE = true;
+    if (DEV_MODE) {
+      if (!wx.getStorageSync('userInfo')) {
+        wx.setStorageSync('userInfo', {
+          studentName: '测试学生',
+          grade: '五年级',
+          class: '1班',
+          parentPhone: '13800138000'
+        });
+      }
+      if (!app.hasActivityContext()) {
+        app.globalData.school_id = 'school001';
+        app.globalData.act_id = 'act001';
+      }
+    }
+    
     this.checkLogin();
   },
 
@@ -34,10 +51,12 @@ Page({
       return;
     }
 
-    if (!app.hasActivityContext()) {
+    // 开发模式下不检查活动上下文
+    const DEV_MODE = true;
+    if (!DEV_MODE && !app.hasActivityContext()) {
       showToast('活动信息异常');
       setTimeout(() => {
-        wx.exitMiniProgram();
+        // wx.exitMiniProgram(); // 开发时注释掉
       }, 2000);
       return;
     }
